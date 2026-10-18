@@ -68,3 +68,12 @@ document.getElementById('adminDemo').addEventListener('click',e=>{const sa=e.tar
 document.getElementById('whatsappContact').addEventListener('click',e=>{e.preventDefault();if(!TIAXORA_WHATSAPP_NUMBER){alert(lang==='fr'?'Le bouton WhatsApp est prêt. Le numéro officiel de TIAXORA devra être ajouté avant la mise en ligne.':'The WhatsApp button is ready. TIAXORA’s official number must be added before launch.');return;}const message=lang==='fr'?'Bonjour TIAXORA, je souhaite obtenir des informations sur un billet.':'Hello TIAXORA, I would like information about a ticket.';window.open('https://wa.me/'+TIAXORA_WHATSAPP_NUMBER+'?text='+encodeURIComponent(message),'_blank','noopener');});render();
 </script>
 </body></html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
+const SUPABASE_URL = 'https://aszbqnkaqdbgdqdciifb.supabase.co';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_G5Y3B3o6hljykJ4jdEUOAA_-ApvsjpD';
+
+window.tiaxoraSupabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
+</script>
