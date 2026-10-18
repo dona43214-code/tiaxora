@@ -1,951 +1,1237 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#071426">
-<meta name="description" content="TIAXORA - Achetez et revendez vos billets de matchs de football.">
-<title>TIAXORA | Billetterie sportive</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071426">
+  <meta name="description" content="TIAXORA — Billetterie sportive internationale. Découvrez des événements et achetez ou proposez vos billets.">
+  <title>TIAXORA — Billetterie sportive</title>
 
-<style>
-:root {
-  --navy: #071426;
-  --navy2: #102642;
-  --gold: #d8ad52;
-  --white: #ffffff;
-  --muted: #aebbd0;
-  --card: #102039;
-  --green: #32c48d;
-  --red: #ff6b6b;
-}
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+  <style>
+    :root {
+      --navy: #071426;
+      --navy2: #102540;
+      --gold: #d6ad55;
+      --gold2: #f2d58b;
+      --white: #ffffff;
+      --muted: #aab6c6;
+      --bg: #f4f6fa;
+      --border: #e1e6ee;
+      --green: #14804a;
+      --red: #b42318;
+      --radius: 16px;
+      --shadow: 0 8px 30px rgba(7,20,38,.09);
+    }
 
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  background: var(--navy);
-  color: var(--white);
-  line-height: 1.6;
-}
+    * { box-sizing: border-box; }
 
-button, input, select, textarea {
-  font: inherit;
-}
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: #172334;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-button {
-  cursor: pointer;
-}
+    button, input, select, textarea { font: inherit; }
+    button { cursor: pointer; }
+    a { color: inherit; text-decoration: none; }
 
-header {
-  background: #050e1c;
-  border-bottom: 1px solid #253650;
-  padding: 14px 5%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  position: sticky;
-  top: 0;
-  z-index: 20;
-}
+    .topbar {
+      background: var(--navy);
+      color: white;
+      padding: 12px 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      border-bottom: 2px solid var(--gold);
+    }
 
-.logo {
-  font-size: 25px;
-  font-weight: 900;
-  color: var(--gold);
-  letter-spacing: 1px;
-  text-decoration: none;
-}
+    .brand {
+      font-size: 25px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      color: var(--gold2);
+    }
 
-.logo span {
-  color: white;
-}
+    .brand small {
+      display: block;
+      font-size: 9px;
+      letter-spacing: 3px;
+      color: white;
+      margin-top: 3px;
+    }
 
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
 
-.profile-button {
-  background: var(--navy2);
-  border: 1px solid var(--gold);
-  color: white;
-  padding: 9px 12px;
-  border-radius: 8px;
-}
+    .language {
+      padding: 9px;
+      border-radius: 8px;
+      border: 1px solid #44536a;
+      background: #102540;
+      color: white;
+    }
 
-.profile-menu {
-  display: none;
-  position: absolute;
-  right: 5%;
-  top: 68px;
-  background: #102039;
-  border: 1px solid #35445a;
-  border-radius: 10px;
-  min-width: 205px;
-  overflow: hidden;
-  box-shadow: 0 8px 25px #0008;
-}
+    .btn {
+      border: 0;
+      border-radius: 9px;
+      padding: 11px 15px;
+      font-weight: 700;
+      transition: .2s;
+    }
 
-.profile-menu button {
-  display: block;
-  width: 100%;
-  text-align: left;
-  padding: 12px;
-  border: none;
-  background: transparent;
-  color: white;
-}
+    .btn:hover { opacity: .88; transform: translateY(-1px); }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-dark { background: var(--navy); color: white; }
+    .btn-light { background: white; color: var(--navy); border: 1px solid var(--border); }
+    .btn-danger { background: #fee4e2; color: var(--red); }
 
-.profile-menu button:hover {
-  background: #1b3150;
-  color: var(--gold);
-}
+    .hero {
+      padding: 45px 5%;
+      background:
+        radial-gradient(circle at 85% 10%, rgba(214,173,85,.17), transparent 30%),
+        linear-gradient(120deg, #071426, #173351);
+      color: white;
+    }
 
-.hero {
-  padding: 65px 6% 55px;
-  text-align: center;
-  background:
-    radial-gradient(ellipse at top, #173352 0%, #071426 70%);
-}
+    .hero-inner { max-width: 1100px; margin: auto; }
 
-.badge {
-  display: inline-block;
-  border: 1px solid var(--gold);
-  color: var(--gold);
-  border-radius: 30px;
-  padding: 5px 14px;
-  font-size: 12px;
-  margin-bottom: 18px;
-}
+    .eyebrow {
+      color: var(--gold2);
+      font-weight: 800;
+      letter-spacing: 2px;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
 
-.hero h1 {
-  font-size: clamp(32px, 7vw, 58px);
-  line-height: 1.15;
-  margin-bottom: 18px;
-}
+    .hero h1 {
+      font-size: clamp(30px, 6vw, 53px);
+      max-width: 700px;
+      line-height: 1.12;
+      margin: 14px 0;
+    }
 
-.hero h1 span {
-  color: var(--gold);
-}
+    .hero p {
+      max-width: 620px;
+      color: #d3dce8;
+      line-height: 1.7;
+    }
 
-.hero p {
-  max-width: 650px;
-  margin: 0 auto 25px;
-  color: var(--muted);
-}
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
 
-.btn {
-  display: inline-block;
-  padding: 12px 18px;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  margin: 4px;
-}
+    .trust-strip {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 28px;
+      font-size: 12px;
+      color: #d3dce8;
+    }
 
-.btn-gold {
-  background: var(--gold);
-  color: #071426;
-}
+    main { max-width: 1200px; margin: auto; padding: 28px 4%; }
 
-.btn-dark {
-  background: #1b3150;
-  color: white;
-  border: 1px solid #40516a;
-}
+    .section { margin-bottom: 30px; }
 
-.btn-red {
-  background: #652d38;
-  color: white;
-}
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
 
-.container {
-  width: 90%;
-  max-width: 1100px;
-  margin: 0 auto;
-}
+    h2 { margin: 0; color: var(--navy); font-size: 24px; }
+    .subtext { color: #667386; font-size: 13px; margin-top: 6px; }
 
-section {
-  padding: 38px 0;
-}
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+      background: white;
+      padding: 15px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      margin-bottom: 18px;
+    }
 
-.section-title {
-  font-size: 26px;
-  margin-bottom: 8px;
-}
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid #d5dce6;
+      background: white;
+      padding: 12px;
+      border-radius: 9px;
+      color: #172334;
+      outline: none;
+    }
 
-.section-description {
-  color: var(--muted);
-  margin-bottom: 22px;
-}
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--gold);
+      box-shadow: 0 0 0 3px rgba(214,173,85,.15);
+    }
 
-.notice {
-  background: #2b2517;
-  border: 1px solid #80672f;
-  color: #f5d99b;
-  padding: 12px;
-  border-radius: 8px;
-  margin: 15px 0;
-  font-size: 13px;
-}
+    textarea { min-height: 110px; resize: vertical; }
 
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-}
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
 
-.card {
-  background: var(--card);
-  border: 1px solid #293b55;
-  border-radius: 13px;
-  padding: 20px;
-}
+    .card {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
 
-.card h3 {
-  margin: 12px 0 6px;
-}
+    .event-cover {
+      min-height: 145px;
+      background: linear-gradient(135deg, #102540, #234a6d);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold2);
+      font-size: 44px;
+      position: relative;
+    }
 
-.card p {
-  color: var(--muted);
-  font-size: 14px;
-}
+    .event-cover .sport-label {
+      position: absolute;
+      left: 12px;
+      top: 12px;
+      font-size: 10px;
+      color: white;
+      background: rgba(0,0,0,.28);
+      padding: 6px 9px;
+      border-radius: 20px;
+    }
 
-.match {
-  font-size: 25px;
-  font-weight: bold;
-  text-align: center;
-  margin: 15px 0;
-}
+    .card-body { padding: 16px; }
+    .card h3 { margin: 0 0 10px; color: var(--navy); font-size: 18px; }
+    .meta { color: #697789; font-size: 12px; line-height: 1.8; }
+    .price { font-weight: 900; color: #916b1b; font-size: 20px; margin: 12px 0; }
+    .card-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px; }
+    .card-actions .btn { flex: 1; }
 
-.match small {
-  display: block;
-  color: var(--gold);
-  font-size: 12px;
-  margin-top: 7px;
-}
+    .notice {
+      padding: 13px 15px;
+      background: #fff8e7;
+      border: 1px solid #f0dfb1;
+      color: #6e5216;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
 
-.price {
-  font-size: 23px;
-  color: var(--gold);
-  font-weight: bold;
-  margin: 12px 0;
-}
+    .panel {
+      background: white;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow);
+    }
 
-.tag {
-  font-size: 11px;
-  background: #263c55;
-  color: #dbe6f6;
-  border-radius: 20px;
-  padding: 4px 9px;
-}
+    .panel h3 { margin-top: 0; color: var(--navy); }
+    .form-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; }
+    .field { margin-bottom: 12px; }
+    .field label { display: block; margin-bottom: 6px; font-weight: 700; font-size: 13px; }
+    .full { grid-column: 1 / -1; }
 
-.form-card {
-  max-width: 620px;
-  margin: 0 auto;
-}
+    .tabs {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 12px;
+      margin-bottom: 12px;
+    }
 
-label {
-  display: block;
-  font-size: 14px;
-  margin: 12px 0 5px;
-}
+    .tab {
+      white-space: nowrap;
+      background: white;
+      color: var(--navy);
+      border: 1px solid var(--border);
+      padding: 10px 13px;
+      border-radius: 9px;
+      font-weight: 700;
+    }
 
-input, select, textarea {
-  width: 100%;
-  background: #071426;
-  border: 1px solid #354964;
-  border-radius: 7px;
-  color: white;
-  padding: 12px;
-  outline: none;
-}
+    .tab.active { background: var(--navy); color: white; border-color: var(--navy); }
 
-input:focus, select:focus, textarea:focus {
-  border-color: var(--gold);
-}
+    .hidden { display: none !important; }
 
-textarea {
-  resize: vertical;
-  min-height: 90px;
-}
+    .message {
+      margin: 12px 0;
+      padding: 12px;
+      border-radius: 9px;
+      font-size: 13px;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
 
-.form-message {
-  margin-top: 12px;
-  font-size: 14px;
-  overflow-wrap: anywhere;
-}
+    .message.success { background: #e8f7ee; color: #146c3b; }
+    .message.error { background: #ffeded; color: #a51d1d; }
+    .message.info { background: #eaf2ff; color: #1d4e89; }
 
-.success {
-  color: var(--green);
-}
+    .status {
+      display: inline-block;
+      border-radius: 20px;
+      padding: 5px 9px;
+      font-size: 11px;
+      font-weight: 800;
+      background: #edf0f5;
+      color: #526073;
+    }
 
-.error {
-  color: var(--red);
-}
+    .status.approved { background: #e3f7e9; color: #16713c; }
+    .status.pending { background: #fff3cf; color: #825e00; }
+    .status.rejected { background: #ffe7e5; color: #a51d1d; }
 
-.muted {
-  color: var(--muted);
-  font-size: 13px;
-}
+    .profile-summary {
+      background: linear-gradient(135deg, var(--navy), #1b3d5d);
+      color: white;
+      padding: 20px;
+      border-radius: 14px;
+      margin-bottom: 16px;
+    }
 
-.hidden {
-  display: none !important;
-}
+    .profile-summary strong { color: var(--gold2); }
 
-.panel {
-  background: #0d1d32;
-  border: 1px solid #283c56;
-  padding: 18px;
-  border-radius: 10px;
-  margin-top: 16px;
-}
+    .empty {
+      background: white;
+      border: 1px dashed #c8d1de;
+      border-radius: 12px;
+      padding: 25px;
+      text-align: center;
+      color: #697789;
+      line-height: 1.7;
+    }
 
-footer {
-  border-top: 1px solid #253650;
-  text-align: center;
-  padding: 30px 5%;
-  color: var(--muted);
-  font-size: 13px;
-}
+    .footer {
+      background: var(--navy);
+      color: #d1d9e4;
+      padding: 28px 5%;
+      text-align: center;
+      font-size: 12px;
+      line-height: 1.8;
+      border-top: 2px solid var(--gold);
+    }
 
-footer strong {
-  color: var(--gold);
-}
+    .footer strong { color: var(--gold2); }
 
-@media (max-width: 480px) {
-  header {
-    padding: 12px 4%;
-  }
+    .loading { opacity: .65; pointer-events: none; }
 
-  .logo {
-    font-size: 21px;
-  }
-
-  .profile-button {
-    padding: 8px;
-    font-size: 12px;
-  }
-
-  .hero {
-    padding-top: 48px;
-  }
-}
-</style>
+    @media(max-width:600px) {
+      .topbar { padding: 12px 4%; }
+      .brand { font-size: 22px; }
+      .hero { padding: 35px 5%; }
+      main { padding: 22px 4%; }
+      .form-grid { grid-template-columns: 1fr; }
+      .full { grid-column: auto; }
+      .panel { padding: 15px; }
+    }
+  </style>
 </head>
 
 <body>
+  <header class="topbar">
+    <a href="#" class="brand" aria-label="TIAXORA accueil">
+      TIAXORA
+      <small>SPORTS TICKETS MARKETPLACE</small>
+    </a>
 
-<header>
-  <a href="#accueil" class="logo">TIA<span>X</span>ORA</a>
-
-  <div class="header-right">
-    <button class="profile-button" onclick="toggleMenu()">
-      ☰ Mon compte
-    </button>
-  </div>
-
-  <div class="profile-menu" id="profileMenu">
-    <button onclick="showSection('profil')">👤 Mon profil</button>
-    <button onclick="showSection('commandes')">🎟️ Mes commandes</button>
-    <button onclick="showSection('vendeur')">🤝 Devenir vendeur</button>
-    <button onclick="showSection('espaceVendeur')">🏪 Mon espace vendeur</button>
-    <button onclick="showSection('administration')">⚙️ Administration</button>
-    <button onclick="logout()">🚪 Déconnexion</button>
-  </div>
-</header>
-
-<main>
-
-<section class="hero" id="accueil">
-  <div class="badge">LA PASSION DU FOOTBALL, PARTOUT</div>
-
-  <h1>Vivez le match.<br><span>Ne ratez rien.</span></h1>
-
-  <p>
-    Découvrez TIAXORA, votre future plateforme internationale
-    pour acheter et revendre des billets d'événements sportifs.
-  </p>
-
-  <a href="#matchs" class="btn btn-gold">Découvrir les matchs</a>
-  <button class="btn btn-dark" onclick="showSection('auth')">
-    Créer un compte
-  </button>
-</section>
-
-<section id="matchs">
-  <div class="container">
-    <h2 class="section-title">Les événements</h2>
-    <p class="section-description">
-      Découvrez notre présentation des événements sportifs.
-    </p>
-
-    <div class="notice">
-      ⚠️ Les rencontres ci-dessous sont des exemples de démonstration.
-      Aucun billet réel n'est proposé à la vente pour le moment.
+    <div class="top-actions">
+      <select id="language" class="language" aria-label="Language">
+        <option value="fr">FR</option>
+        <option value="en">EN</option>
+        <option value="it">IT</option>
+        <option value="de">DE</option>
+        <option value="es">ES</option>
+      </select>
+      <button class="btn btn-gold" id="accountButton" data-i18n="account">Mon compte</button>
     </div>
+  </header>
 
-    <div class="grid">
-
-      <article class="card">
-        <span class="tag">EXEMPLE</span>
-        <div class="match">⚽<br>Real Madrid<br><small>VS</small> FC Barcelone</div>
-        <p>Football · Espagne</p>
-        <p>Date : à confirmer</p>
-        <div class="price">Prix à confirmer</div>
-        <button class="btn btn-gold" onclick="buyTicket()">
-          Acheter un billet
-        </button>
-      </article>
-
-      <article class="card">
-        <span class="tag">EXEMPLE</span>
-        <div class="match">⚽<br>Manchester City<br><small>VS</small> Arsenal</div>
-        <p>Football · Angleterre</p>
-        <p>Date : à confirmer</p>
-        <div class="price">Prix à confirmer</div>
-        <button class="btn btn-gold" onclick="buyTicket()">
-          Acheter un billet
-        </button>
-      </article>
-
-      <article class="card">
-        <span class="tag">EXEMPLE</span>
-        <div class="match">⚽<br>PSG<br><small>VS</small> Marseille</div>
-        <p>Football · France</p>
-        <p>Date : à confirmer</p>
-        <div class="price">Prix à confirmer</div>
-        <button class="btn btn-gold" onclick="buyTicket()">
-          Acheter un billet
-        </button>
-      </article>
-
-    </div>
-  </div>
-</section>
-
-<section id="auth" class="hidden">
-  <div class="container">
-    <div class="card form-card">
-      <h2 class="section-title">Ton compte TIAXORA</h2>
-      <p class="section-description">
-        Connecte-toi ou crée ton compte.
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">TIAXORA · LIVE THE GAME</div>
+      <h1 data-i18n="heroTitle">Le sport vous rassemble. Vivez-le en direct.</h1>
+      <p data-i18n="heroText">
+        Découvrez les événements sportifs, consultez les billets proposés par les vendeurs et préparez votre prochaine expérience.
       </p>
-
-      <form id="signupForm">
-        <h3>Créer un compte</h3>
-
-        <label for="signupName">Nom complet</label>
-        <input id="signupName" type="text" required maxlength="100">
-
-        <label for="signupEmail">Adresse e-mail</label>
-        <input id="signupEmail" type="email" required>
-
-        <label for="signupPassword">Mot de passe</label>
-        <input id="signupPassword" type="password" minlength="8" required>
-
-        <button class="btn btn-gold" type="submit">
-          Créer mon compte
-        </button>
-      </form>
-
-      <hr style="border-color:#354964;margin:25px 0">
-
-      <form id="loginForm">
-        <h3>Déjà inscrit ?</h3>
-
-        <label for="loginEmail">Adresse e-mail</label>
-        <input id="loginEmail" type="email" required>
-
-        <label for="loginPassword">Mot de passe</label>
-        <input id="loginPassword" type="password" required>
-
-        <button class="btn btn-gold" type="submit">
-          Me connecter
-        </button>
-      </form>
-
-      <p id="authMessage" class="form-message"></p>
-    </div>
-  </div>
-</section>
-
-<section id="profil" class="hidden">
-  <div class="container">
-    <div class="card">
-      <h2 class="section-title">Mon profil</h2>
-      <div id="profileDetails">Connecte-toi pour afficher ton profil.</div>
-    </div>
-  </div>
-</section>
-
-<section id="commandes" class="hidden">
-  <div class="container">
-    <div class="card">
-      <h2 class="section-title">Mes commandes</h2>
-      <p class="section-description">
-        Tes commandes apparaîtront ici lorsque le système de commande
-        sécurisé sera mis en place.
-      </p>
-      <div class="notice">
-        Les achats et paiements réels ne sont pas encore activés.
+      <div class="hero-actions">
+        <button class="btn btn-gold" data-go="events" data-i18n="discover">Découvrir les événements</button>
+        <button class="btn btn-light" data-go="seller" data-i18n="becomeSeller">Devenir vendeur</button>
+      </div>
+      <div class="trust-strip">
+        <span>◆ Événements sportifs</span>
+        <span>◆ Espace vendeur</span>
+        <span>◆ Assistance en ligne</span>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-<section id="vendeur" class="hidden">
-  <div class="container">
-    <div class="card form-card">
-      <h2 class="section-title">Devenir vendeur</h2>
-      <p class="section-description">
-        Soumets ta candidature pour vendre sur TIAXORA.
-      </p>
-
-      <form id="sellerForm">
-        <label for="sellerName">Nom complet</label>
-        <input id="sellerName" required maxlength="100">
-
-        <label for="sellerCountry">Pays</label>
-        <input id="sellerCountry" required maxlength="100">
-
-        <label for="sellerReason">Pourquoi souhaites-tu devenir vendeur ?</label>
-        <textarea id="sellerReason" required maxlength="1500"></textarea>
-
-        <button class="btn btn-gold" type="submit">
-          Envoyer ma candidature
-        </button>
-      </form>
-
-      <p id="sellerMessage" class="form-message"></p>
-    </div>
-  </div>
-</section>
-
-<section id="espaceVendeur" class="hidden">
-  <div class="container">
-    <div class="card form-card">
-      <h2 class="section-title">Mon espace vendeur</h2>
-
-      <div class="notice">
-        La mise en vente est réservée aux vendeurs autorisés par
-        l'administration.
+  <main>
+    <section id="events" class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="eventsTitle">Événements et billets</h2>
+          <div class="subtext" data-i18n="eventsSubtitle">Recherchez un événement et consultez les offres disponibles.</div>
+        </div>
+        <button class="btn btn-dark" id="refreshEvents" data-i18n="refresh">Actualiser</button>
       </div>
 
-      <form id="ticketForm">
-        <label for="ticketTitle">Nom du match ou de l'événement</label>
-        <input id="ticketTitle" required maxlength="150">
+      <div class="notice" data-i18n="demoNotice">
+        Les événements de démonstration, s’il y en a, sont fictifs. Ils ne constituent pas des billets disponibles à la vente.
+      </div>
 
-        <label for="ticketSport">Sport</label>
-        <select id="ticketSport" required>
-          <option value="">Choisir un sport</option>
+      <div class="filters">
+        <input id="searchEvent" type="search" placeholder="Équipe, événement ou mot-clé" data-i18n-placeholder="searchPlaceholder">
+        <select id="filterSport">
+          <option value="" data-i18n="allSports">Tous les sports</option>
           <option value="Football">Football</option>
           <option value="Basketball">Basketball</option>
           <option value="Tennis">Tennis</option>
           <option value="Autre">Autre</option>
         </select>
-
-        <label for="ticketCity">Ville de l'événement</label>
-        <input id="ticketCity" required maxlength="100">
-
-        <label for="ticketDate">Date de l'événement</label>
-        <input id="ticketDate" type="date" required>
-
-        <label for="ticketPrice">Prix du billet</label>
-        <input id="ticketPrice" type="number" min="0.01" step="0.01" required>
-
-        <button class="btn btn-gold" type="submit">
-          Soumettre le billet
-        </button>
-      </form>
-
-      <p id="ticketMessage" class="form-message"></p>
-    </div>
-  </div>
-</section>
-
-<section id="administration" class="hidden">
-  <div class="container">
-    <div class="card">
-      <h2 class="section-title">Administration</h2>
-
-      <p class="section-description">
-        Espace réservé au compte administrateur autorisé côté serveur.
-      </p>
-
-      <div id="adminDetails">
-        Vérification de tes autorisations...
+        <input id="filterCountry" placeholder="Pays" data-i18n-placeholder="country">
+        <input id="filterCity" placeholder="Ville" data-i18n-placeholder="city">
+        <input id="filterDate" type="date" aria-label="Date">
+        <button id="clearFilters" class="btn btn-light" data-i18n="clear">Effacer</button>
       </div>
 
-      <div class="notice">
-        Les permissions doivent être contrôlées par Supabase et ses
-        politiques de sécurité. Masquer cette section ne suffit pas
-        à sécuriser une plateforme.
+      <div id="eventsMessage" class="message hidden"></div>
+      <div id="eventGrid" class="grid"></div>
+    </section>
+
+    <section id="account" class="section hidden">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="myAccount">Mon compte</h2>
+          <div class="subtext" data-i18n="accountSubtitle">Connectez-vous ou créez votre compte TIAXORA.</div>
+        </div>
+      </div>
+
+      <div id="authMessage" class="message hidden"></div>
+
+      <div id="authForms" class="grid">
+        <div class="panel">
+          <h3 data-i18n="login">Connexion</h3>
+          <form id="loginForm">
+            <div class="field">
+              <label for="loginEmail" data-i18n="email">Adresse e-mail</label>
+              <input id="loginEmail" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="loginPassword" data-i18n="password">Mot de passe</label>
+              <input id="loginPassword" type="password" required autocomplete="current-password">
+            </div>
+            <button class="btn btn-gold" type="submit" data-i18n="login">Connexion</button>
+          </form>
+          <p><button id="forgotPassword" class="btn btn-light" type="button" data-i18n="forgotPassword">Mot de passe oublié ?</button></p>
+        </div>
+
+        <div class="panel">
+          <h3 data-i18n="createAccount">Créer un compte</h3>
+          <form id="signupForm">
+            <div class="field">
+              <label for="signupName" data-i18n="fullName">Nom complet</label>
+              <input id="signupName" required maxlength="100" autocomplete="name">
+            </div>
+            <div class="field">
+              <label for="signupEmail" data-i18n="email">Adresse e-mail</label>
+              <input id="signupEmail" type="email" required autocomplete="email">
+            </div>
+            <div class="field">
+              <label for="signupPassword" data-i18n="password">Mot de passe</label>
+              <input id="signupPassword" type="password" required minlength="8" autocomplete="new-password">
+            </div>
+            <button class="btn btn-dark" type="submit" data-i18n="createAccount">Créer un compte</button>
+          </form>
+        </div>
+      </div>
+
+      <div id="loggedInPanel" class="hidden">
+        <div class="profile-summary">
+          <div data-i18n="welcome">Bienvenue</div>
+          <h3 id="profileName">—</h3>
+          <div id="profileEmail">—</div>
+          <p><span data-i18n="accountStatus">Statut du compte :</span> <strong id="profileStatus">Actif</strong></p>
+          <button class="btn btn-light" id="logoutButton" data-i18n="logout">Déconnexion</button>
+        </div>
+
+        <div class="tabs">
+          <button class="tab active" data-tab="profileTab" data-i18n="myProfile">Mon profil</button>
+          <button class="tab" data-tab="ordersTab" data-i18n="myOrders">Mes commandes</button>
+          <button class="tab" data-tab="sellerTab" data-i18n="sellerSpace">Espace vendeur</button>
+        </div>
+
+        <div id="profileTab" class="panel tab-content">
+          <h3 data-i18n="profileInformation">Informations du profil</h3>
+          <form id="profileForm">
+            <div class="field">
+              <label for="profileEditName" data-i18n="fullName">Nom complet</label>
+              <input id="profileEditName" required maxlength="100">
+            </div>
+            <button class="btn btn-gold" type="submit" data-i18n="save">Enregistrer</button>
+          </form>
+          <div id="profileMessage" class="message hidden"></div>
+        </div>
+
+        <div id="ordersTab" class="panel tab-content hidden">
+          <h3 data-i18n="myOrders">Mes commandes</h3>
+          <div class="empty" data-i18n="ordersNotice">
+            L’historique des commandes apparaîtra lorsque le système de commande et de paiement sécurisé sera configuré.
+          </div>
+        </div>
+
+        <div id="sellerTab" class="panel tab-content hidden">
+          <h3 data-i18n="sellerSpace">Espace vendeur</h3>
+          <p class="subtext" data-i18n="sellerIntro">
+            Envoyez votre demande. Les annonces seront publiées uniquement après validation.
+          </p>
+
+          <div id="sellerMessage" class="message hidden"></div>
+          <div id="sellerStatusBox"></div>
+
+          <form id="sellerForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="sellerName" data-i18n="fullName">Nom complet</label>
+                <input id="sellerName" required maxlength="100">
+              </div>
+              <div class="field">
+                <label for="sellerCountry" data-i18n="country">Pays</label>
+                <input id="sellerCountry" required maxlength="100">
+              </div>
+              <div class="field full">
+                <label for="sellerReason" data-i18n="sellerReason">Présentez votre activité</label>
+                <textarea id="sellerReason" required maxlength="1500"></textarea>
+              </div>
+            </div>
+            <button class="btn btn-gold" type="submit" data-i18n="sendApplication">Envoyer ma demande</button>
+          </form>
+
+          <hr style="border:0;border-top:1px solid var(--border);margin:24px 0">
+
+          <h3 data-i18n="submitTicket">Proposer un billet</h3>
+          <div class="notice" data-i18n="ticketApprovalNotice">
+            Cette fonction est réservée aux vendeurs approuvés. Chaque billet soumis doit être contrôlé avant publication.
+          </div>
+          <div id="ticketMessage" class="message hidden"></div>
+
+          <form id="ticketForm">
+            <div class="form-grid">
+              <div class="field">
+                <label for="ticketEvent" data-i18n="eventName">Nom de l’événement</label>
+                <input id="ticketEvent" required maxlength="160">
+              </div>
+              <div class="field">
+                <label for="ticketSport" data-i18n="sport">Sport</label>
+                <select id="ticketSport" required>
+                  <option value="Football">Football</option>
+                  <option value="Basketball">Basketball</option>
+                  <option value="Tennis">Tennis</option>
+                  <option value="Autre">Autre</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="ticketCountry" data-i18n="country">Pays</label>
+                <input id="ticketCountry" required maxlength="100">
+              </div>
+              <div class="field">
+                <label for="ticketCity" data-i18n="city">Ville</label>
+                <input id="ticketCity" required maxlength="100">
+              </div>
+              <div class="field">
+                <label for="ticketDate" data-i18n="eventDate">Date de l’événement</label>
+                <input id="ticketDate" type="date" required>
+              </div>
+              <div class="field">
+                <label for="ticketPrice" data-i18n="priceFCFA">Prix en FCFA</label>
+                <input id="ticketPrice" type="number" min="1" max="100000000" step="1" required>
+              </div>
+              <div class="field full">
+                <label for="ticketDescription" data-i18n="description">Description</label>
+                <textarea id="ticketDescription" maxlength="1500" required></textarea>
+              </div>
+            </div>
+            <button class="btn btn-dark" type="submit" data-i18n="submitForReview">Soumettre pour validation</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section id="seller" class="section">
+      <div class="panel">
+        <h2 data-i18n="sellerTitle">Vendez vos billets sur TIAXORA</h2>
+        <p data-i18n="sellerMarketing">
+          Rejoignez notre marketplace sportive. Créez un compte, envoyez votre demande vendeur et attendez sa validation.
+        </p>
+        <button class="btn btn-gold" data-go="account" data-i18n="startNow">Commencer</button>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="section-head">
+        <div>
+          <h2 data-i18n="contactTitle">Contactez-nous</h2>
+          <div class="subtext" data-i18n="contactSubtitle">Une question ? Écrivez-nous directement depuis le site.</div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div id="contactMessage" class="message hidden"></div>
+        <form id="contactForm">
+          <div class="form-grid">
+            <div class="field">
+              <label for="contactName" data-i18n="fullName">Nom complet</label>
+              <input id="contactName" required maxlength="100">
+            <             </div>
+            <div class="field">
+              <label for="contactEmail" data-i18n="email">Adresse e-mail</label>
+              <input id="contactEmail" type="email" required maxlength="254">
+            </div>
+            <div class="field full">
+              <label for="contactSubject" data-i18n="subject">Sujet</label>
+              <input id="contactSubject" required maxlength="160">
+            </div>
+            <div class="field full">
+              <label for="contactBody" data-i18n="message">Votre message</label>
+              <textarea id="contactBody" required maxlength="4000"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-gold" type="submit" data-i18n="sendMessage">Envoyer le message</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="admin" class="section hidden">
+      <div class="panel">
+        <h2 data-i18n="adminTitle">Administration</h2>
+        <div class="notice" data-i18n="adminNotice">
+          L’administration doit être activée et sécurisée dans Supabase avant de gérer les utilisateurs, les vendeurs ou les billets.
+        </div>
+        <div id="adminMessage" class="message hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <strong>TIAXORA</strong><br>
+    <span data-i18n="footerText">La passion du sport, au-delà des frontières.</span><br>
+    © <span id="year"></span> TIAXORA — <span data-i18n="rights">Tous droits réservés.</span>
+  </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://aszbqnkaqdbgdqdciifb.supabase.co';
+    const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_G5Y3B3o6hljykJ4jdEUOAA_-ApvsjpD';
+
+    const db = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
+    const $ = id => document.getElementById(id);
+
+    let currentUser = null;
+    let currentProfile = null;
+    let ticketsCache = [];
+    let sellerApproved = false;
+
+    const translations = {
+      fr: {
+        account:"Mon compte", heroTitle:"Le sport vous rassemble. Vivez-le en direct.",
+        heroText:"Découvrez les événements sportifs, consultez les billets proposés par les vendeurs et préparez votre prochaine expérience.",
+        discover:"Découvrir les événements", becomeSeller:"Devenir vendeur",
+        eventsTitle:"Événements et billets", eventsSubtitle:"Recherchez un événement et consultez les offres disponibles.",
+        refresh:"Actualiser", demoNotice:"Les événements de démonstration, s’il y en a, sont fictifs. Ils ne constituent pas des billets disponibles à la vente.",
+        searchPlaceholder:"Équipe, événement ou mot-clé", allSports:"Tous les sports",
+        country:"Pays", city:"Ville", clear:"Effacer", myAccount:"Mon compte",
+        accountSubtitle:"Connectez-vous ou créez votre compte TIAXORA.", login:"Connexion",
+        email:"Adresse e-mail", password:"Mot de passe", forgotPassword:"Mot de passe oublié ?",
+        createAccount:"Créer un compte", fullName:"Nom complet", welcome:"Bienvenue",
+        accountStatus:"Statut du compte :", logout:"Déconnexion", myProfile:"Mon profil",
+        myOrders:"Mes commandes", sellerSpace:"Espace vendeur", profileInformation:"Informations du profil",
+        save:"Enregistrer", ordersNotice:"L’historique des commandes apparaîtra lorsque le système de commande et de paiement sécurisé sera configuré.",
+        sellerIntro:"Envoyez votre demande. Les annonces seront publiées uniquement après validation.",
+        sellerReason:"Présentez votre activité", sendApplication:"Envoyer ma demande",
+        submitTicket:"Proposer un billet", ticketApprovalNotice:"Cette fonction est réservée aux vendeurs approuvés. Chaque billet soumis doit être contrôlé avant publication.",
+        eventName:"Nom de l’événement", sport:"Sport", eventDate:"Date de l’événement",
+        priceFCFA:"Prix en FCFA", description:"Description", submitForReview:"Soumettre pour validation",
+        sellerTitle:"Vendez vos billets sur TIAXORA", sellerMarketing:"Rejoignez notre marketplace sportive. Créez un compte, envoyez votre demande vendeur et attendez sa validation.",
+        startNow:"Commencer", contactTitle:"Contactez-nous", contactSubtitle:"Une question ? Écrivez-nous directement depuis le site.",
+        subject:"Sujet", message:"Votre message", sendMessage:"Envoyer le message",
+        adminTitle:"Administration", adminNotice:"L’administration doit être activée et sécurisée dans Supabase avant de gérer les utilisateurs, les vendeurs ou les billets.",
+        footerText:"La passion du sport, au-delà des frontières.", rights:"Tous droits réservés."
+      },
+      en: {
+        account:"My account", heroTitle:"Sport brings us together. Experience it live.",
+        heroText:"Discover sporting events and browse tickets offered by sellers.",
+        discover:"Discover events", becomeSeller:"Become a seller", eventsTitle:"Events and tickets",
+        eventsSubtitle:"Search events and browse available offers.", refresh:"Refresh",
+        demoNotice:"Any demonstration events are fictional and are not tickets available for sale.",
+        searchPlaceholder:"Team, event or keyword", allSports:"All sports", country:"Country",
+        city:"City", clear:"Clear", myAccount:"My account", accountSubtitle:"Sign in or create your TIAXORA account.",
+        login:"Sign in", email:"Email address", password:"Password", forgotPassword:"Forgot password?",
+        createAccount:"Create account", fullName:"Full name", welcome:"Welcome",
+        accountStatus:"Account status:", logout:"Sign out", myProfile:"My profile", myOrders:"My orders",
+        sellerSpace:"Seller space", profileInformation:"Profile information", save:"Save",
+        ordersNotice:"Order history will appear when secure ordering and payment are configured.",
+        sellerIntro:"Apply to sell. Listings will only be published after approval.",
+        sellerReason:"Describe your business", sendApplication:"Send application", submitTicket:"List a ticket",
+        ticketApprovalNotice:"Only approved sellers may submit tickets. Each listing must be reviewed before publication.",
+        eventName:"Event name", sport:"Sport", eventDate:"Event date", priceFCFA:"Price in XOF",
+        description:"Description", submitForReview:"Submit for review", sellerTitle:"Sell tickets on TIAXORA",
+        sellerMarketing:"Join our sports marketplace. Create an account and apply to become a seller.",
+        startNow:"Get started", contactTitle:"Contact us", contactSubtitle:"Have a question? Write to us directly on the website.",
+        subject:"Subject", message:"Your message", sendMessage:"Send message", adminTitle:"Administration",
+        adminNotice:"Administration must be secured and configured in Supabase before managing users, sellers or tickets.",
+        footerText:"A passion for sport beyond borders.", rights:"All rights reserved."
+      },
+      it: {
+        account:"Il mio account", heroTitle:"Lo sport ci unisce. Vivilo dal vivo.",
+        heroText:"Scopri gli eventi sportivi e consulta i biglietti proposti dai venditori.",
+        discover:"Scopri gli eventi", becomeSeller:"Diventa venditore", eventsTitle:"Eventi e biglietti",
+        eventsSubtitle:"Cerca eventi e consulta le offerte disponibili.", refresh:"Aggiorna",
+        demoNotice:"Gli eventuali eventi dimostrativi sono fittizi e non rappresentano biglietti in vendita.",
+        searchPlaceholder:"Squadra, evento o parola chiave", allSports:"Tutti gli sport",
+        country:"Paese", city
+              </div>
+      <div class="field">
+        <label for="contactSubject" data-i18n="subject">Sujet</label>
+        <input id="contactSubject" required maxlength="160">
+      </div>
+      <div class="field full">
+        <label for="contactBody" data-i18n="message">Votre message</label>
+        <textarea id="contactBody" required maxlength="4000"></textarea>
       </div>
     </div>
-  </div>
+    <button class="btn btn-gold" type="submit" data-i18n="sendMessage">Envoyer le message</button>
+  </form>
+</div>
 </section>
 
+<section id="admin" class="section hidden">
+  <div class="panel">
+    <h2 data-i18n="adminTitle">Administration</h2>
+    <div class="notice" data-i18n="adminNotice">
+      L’administration doit être activée et sécurisée dans Supabase.
+    </div>
+    <div id="adminMessage" class="message hidden"></div>
+  </div>
+</section>
 </main>
 
-<footer>
-  <p><strong>TIAXORA</strong> — La passion du sport, sans frontières.</p>
-  <p>© <span id="year"></span> TIAXORA. Tous droits réservés.</p>
-  <p style="margin-top:8px">
-    Plateforme en développement — achats réels non activés.
-  </p>
+<footer class="footer">
+  <strong>TIAXORA</strong><br>
+  <span data-i18n="footerText">La passion du sport, au-delà des frontières.</span><br>
+  © <span id="year"></span> TIAXORA —
+  <span data-i18n="rights">Tous droits réservés.</span>
 </footer>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
 const SUPABASE_URL = 'https://aszbqnkaqdbgdqdciifb.supabase.co';
-
-const SUPABASE_PUBLISHABLE_KEY =
-  'sb_publishable_G5Y3B3o6hljykJ4jdEUOAA_-ApvsjpD';
+const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_G5Y3B3o6hljykJ4jdEUOAA_-ApvsjpD';
 
 const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
-let currentSession = null;
-let currentProfile = null;
+const $ = id => document.getElementById(id);
 
-document.getElementById('year').textContent =
-  new Date().getFullYear();
+let currentUser = null;
+let ticketsCache = [];
+let sellerApproved = false;
 
-function setMessage(id, message, success = false) {
-  const el = document.getElementById(id);
-  el.textContent = message;
-  el.className = 'form-message ' + (success ? 'success' : 'error');
+function showMessage(id, text, type = 'info') {
+  const el = $(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'message ' + type;
+  el.classList.remove('hidden');
 }
 
-function toggleMenu() {
-  const menu = document.getElementById('profileMenu');
-  menu.style.display =
-    menu.style.display === 'block' ? 'none' : 'block';
+function hideMessage(id) {
+  $(id)?.classList.add('hidden');
 }
 
-function showSection(id) {
-  document.querySelectorAll('main > section').forEach(section => {
-    section.classList.add('hidden');
+function safeText(value) {
+  return String(value ?? '').replace(/[&<>"']/g, ch => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[ch]);
+}
+
+function friendlyError(error) {
+  const msg = error?.message || String(error);
+
+  if (/Invalid login credentials/i.test(msg))
+    return 'Adresse e-mail ou mot de passe incorrect.';
+
+  if (/row-level security|permission denied|not allowed/i.test(msg))
+    return 'Accès refusé. Les règles de sécurité Supabase doivent être configurées.';
+
+  if (/relation .* does not exist|schema cache/i.test(msg))
+    return 'Une table ou une colonne manque dans Supabase.';
+
+  return msg;
+}
+
+function setLoading(form, state) {
+  form.classList.toggle('loading', state);
+  form.querySelectorAll('button').forEach(button => button.disabled = state);
+}
+
+function goTo(id) {
+  const el = $(id);
+  if (!el) return;
+  el.classList.remove('hidden');
+  el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+document.querySelectorAll('[data-go]').forEach(button => {
+  button.addEventListener('click', () => goTo(button.dataset.go));
+});
+
+$('accountButton').addEventListener('click', () => goTo('account'));
+
+$('year').textContent = new Date().getFullYear();
+
+document.querySelectorAll('[data-tab]').forEach(button => {
+  button.addEventListener('click', () => {
+    document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('[data-tab]').forEach(el => el.classList.remove('active'));
+
+    $(button.dataset.tab)?.classList.remove('hidden');
+    button.classList.add('active');
+  });
+});
+
+async function loadEvents() {
+  $('eventGrid').innerHTML = '<div class="empty">Chargement des billets…</div>';
+
+  try {
+    const { data, error } = await db
+      .from('tickets')
+      .select('id,event_name,sport,country,city,event_date,price,description,status')
+      .eq('status', 'approved')
+      .order('event_date', { ascending: true })
+      .limit(100);
+
+    if (error) throw error;
+
+    ticketsCache = data || [];
+    renderEvents();
+  } catch (error) {
+    ticketsCache = [];
+    $('eventGrid').innerHTML = '';
+    showMessage('eventsMessage', friendlyError(error), 'error');
+  }
+}
+
+function renderEvents() {
+  const query = $('searchEvent').value.trim().toLowerCase();
+  const sport = $('filterSport').value.toLowerCase();
+  const country = $('filterCountry').value.trim().toLowerCase();
+  const city = $('filterCity').value.trim().toLowerCase();
+  const date = $('filterDate').value;
+
+  const filtered = ticketsCache.filter(ticket => {
+    const searchable = [
+      ticket.event_name,
+      ticket.sport,
+      ticket.country,
+      ticket.city,
+      ticket.description
+    ].join(' ').toLowerCase();
+
+    return (!query || searchable.includes(query)) &&
+      (!sport || String(ticket.sport || '').toLowerCase() === sport) &&
+      (!country || String(ticket.country || '').toLowerCase().includes(country)) &&
+      (!city || String(ticket.city || '').toLowerCase().includes(city)) &&
+      (!date || String(ticket.event_date || '').slice(0, 10) === date);
   });
 
-  const target = document.getElementById(id);
-
-  if (target) {
-    target.classList.remove('hidden');
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  document.getElementById('profileMenu').style.display = 'none';
-}
-
-function requireLogin() {
-  if (!currentSession) {
-    showSection('auth');
-    setMessage(
-      'authMessage',
-      'Connecte-toi ou crée un compte pour continuer.'
-    );
-    return false;
-  }
-  return true;
-}
-
-function buyTicket() {
-  if (!requireLogin()) return;
-
-  alert(
-    'Tu es connecté. Les achats réels seront activés après la mise en place du système sécurisé de commandes et de paiements.'
-  );
-}
-
-async function refreshSession() {
-  const { data, error } = await db.auth.getSession();
-
-  if (error) {
-    console.error(error);
+  if (!filtered.length) {
+    $('eventGrid').innerHTML =
+      '<div class="empty">Aucun billet approuvé ne correspond à ta recherche.</div>';
     return;
   }
 
-  currentSession = data.session;
-  updateAccountDisplay();
+  $('eventGrid').innerHTML = filtered.map(ticket => `
+    <article class="card">
+      <div class="event-cover">
+        <span class="sport-label">${safeText(ticket.sport || 'Sport')}</span>
+        <span aria-hidden="true">🏆</span>
+      </div>
+      <div class="card-body">
+        <h3>${safeText(ticket.event_name || 'Événement sportif')}</h3>
+        <div class="meta">
+          📍 ${safeText(ticket.city || '')}, ${safeText(ticket.country || '')}<br>
+          📅 ${safeText(ticket.event_date || '')}
+        </div>
+        <div class="price">${Number(ticket.price || 0).toLocaleString('fr-FR')} FCFA</div>
+        <p>${safeText(ticket.description || '')}</p>
+        <button class="btn btn-dark" data-contact-ticket="${safeText(ticket.id)}">
+          Se renseigner
+        </button>
+      </div>
+    </article>
+  `).join('');
+
+  $('eventGrid').querySelectorAll('[data-contact-ticket]').forEach(button => {
+    button.addEventListener('click', () => {
+      $('contactSubject').value = 'Demande concernant le billet #' + button.dataset.contactTicket;
+      goTo('contact');
+    });
+  });
 }
 
-function updateAccountDisplay() {
-  const menuButton = document.querySelector('.profile-button');
+['searchEvent', 'filterSport', 'filterCountry', 'filterCity', 'filterDate'].forEach(id => {
+  $(id).addEventListener('input', renderEvents);
+  $(id).addEventListener('change', renderEvents);
+});
 
-  if (currentSession) {
-    menuButton.textContent = '👤 Mon compte';
+$('clearFilters').addEventListener('click', () => {
+  ['searchEvent', 'filterCountry', 'filterCity', 'filterDate'].forEach(id => $(id).value = '');
+  $('filterSport').value = '';
+  renderEvents();
+});
 
-    const user = currentSession.user;
+$('refreshEvents').addEventListener('click', loadEvents);
 
-    document.getElementById('profileDetails').innerHTML = '';
+async function updateAuthUI() {
+  const { data } = await db.auth.getUser();
+  currentUser = data?.user || null;
 
-    const details = document.getElementById('profileDetails');
-    const email = document.createElement('p');
-    email.textContent = 'E-mail : ' + (user.email || 'Non disponible');
+  $('authForms').classList.toggle('hidden', !!currentUser);
+  $('loggedInPanel').classList.toggle('hidden', !currentUser);
 
-    const name = document.createElement('p');
-    name.textContent = 'Nom : ' +
-      (user.user_metadata?.full_name || 'Non renseigné');
-
-    details.append(email, name);
-
-    checkAdmin();
-  } else {
-    menuButton.textContent = '☰ Mon compte';
-
-    document.getElementById('profileDetails').textContent =
-      'Connecte-toi pour afficher ton profil.';
-
-    document.getElementById('adminDetails').textContent =
-      'Connecte-toi avec un compte autorisé pour accéder à cet espace.';
-  }
-}
-
-async function checkAdmin() {
-  const box = document.getElementById('adminDetails');
-
-  if (!currentSession) {
-    box.textContent = 'Connexion requise.';
+  if (!currentUser) {
+    sellerApproved = false;
     return;
   }
 
-  const role = currentSession.user.app_metadata?.role;
+  $('profileEmail').textContent = currentUser.email || '';
+  $('profileName').textContent =
+    currentUser.user_metadata?.full_name || currentUser.email || '';
+  $('profileEditName').value = currentUser.user_metadata?.full_name || '';
 
-  if (role === 'admin') {
-    box.textContent =
-      'Compte administrateur reconnu. Les actions administratives devront être protégées par les politiques RLS.';
-  } else {
-    box.textContent =
-      'Accès administrateur non autorisé pour ce compte.';
+  await loadProfile();
+  await loadSellerStatus();
+}
+
+async function loadProfile() {
+  if (!currentUser) return;
+
+  try {
+    const { data, error } = await db
+      .from('profiles')
+      .select('id,full_name')
+      .eq('id', currentUser.id)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    const name = data?.full_name || currentUser.user_metadata?.full_name || '';
+    $('profileName').textContent = name || currentUser.email;
+    $('profileEditName').value = name;
+  } catch (error) {
+    console.warn('Profil non chargé :', error.message);
   }
 }
 
-document.getElementById('signupForm').addEventListener(
-  'submit',
-  async function(event) {
-    event.preventDefault();
+$('signupForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  setLoading(form, true);
 
-    const fullName =
-      document.getElementById('signupName').value.trim();
-
-    const email =
-      document.getElementById('signupEmail').value.trim();
-
-    const password =
-      document.getElementById('signupPassword').value;
-
-    setMessage('authMessage', 'Création du compte en cours...', true);
-
+  try {
     const { data, error } = await db.auth.signUp({
-      email,
-      password,
+      email: $('signupEmail').value.trim(),
+      password: $('signupPassword').value,
       options: {
-        data: {
-          full_name: fullName
-        }
+        data: { full_name: $('signupName').value.trim() }
       }
     });
 
-    if (error) {
-      setMessage('authMessage', error.message);
-      return;
-    }
+    if (error) throw error;
 
-    if (data.session) {
-      currentSession = data.session;
-      updateAccountDisplay();
-      setMessage('authMessage', 'Compte créé avec succès !', true);
-      showSection('profil');
-    } else {
-      setMessage(
-        'authMessage',
-        'Inscription enregistrée. Vérifie tes e-mails pour confirmer ton compte si Supabase le demande.',
-        true
-      );
-    }
+    showMessage(
+      'authMessage',
+      data.session
+        ? 'Compte créé avec succès.'
+        : 'Compte créé. Vérifie ton e-mail pour confirmer ton adresse.',
+      'success'
+    );
+
+    await updateAuthUI();
+    form.reset();
+  } catch (error) {
+    showMessage('authMessage', friendlyError(error), 'error');
+  } finally {
+    setLoading(form, false);
   }
-);
+});
 
-document.getElementById('loginForm').addEventListener(
-  'submit',
-  async function(event) {
-    event.preventDefault();
+$('loginForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  setLoading(form, true);
 
-    const email =
-      document.getElementById('loginEmail').value.trim();
-
-    const password =
-      document.getElementById('loginPassword').value;
-
-    setMessage('authMessage', 'Connexion en cours...', true);
-
-    const { data, error } = await db.auth.signInWithPassword({
-      email,
-      password
+  try {
+    const { error } = await db.auth.signInWithPassword({
+      email: $('loginEmail').value.trim(),
+      password: $('loginPassword').value
     });
 
-    if (error) {
-      setMessage('authMessage', error.message);
-      return;
-    }
+    if (error) throw error;
 
-    currentSession = data.session;
-    updateAccountDisplay();
-
-    setMessage('authMessage', 'Connexion réussie !', true);
-    showSection('profil');
+    await updateAuthUI();
+    showMessage('authMessage', 'Connexion réussie.', 'success');
+    form.reset();
+  } catch (error) {
+    showMessage('authMessage', friendlyError(error), 'error');
+  } finally {
+    setLoading(form, false);
   }
-);
+});
 
-document.getElementById('sellerForm').addEventListener(
-  'submit',
-  async function(event) {
-    event.preventDefault();
+$('forgotPassword').addEventListener('click', async () => {
+  const email = $('loginEmail').value.trim();
 
-    if (!requireLogin()) return;
-
-    const fullName =
-      document.getElementById('sellerName').value.trim();
-
-    const country =
-      document.getElementById('sellerCountry').value.trim();
-
-    const reason =
-      document.getElementById('sellerReason').value.trim();
-
-    setMessage('sellerMessage', 'Envoi de la candidature...', true);
-
-    const { error } = await db
-      .from('seller_applications')
-      .insert({
-        user_id: currentSession.user.id,
-        full_name: fullName,
-        country: country,
-        reason: reason,
-        status: 'pending'
-      });
-
-    if (error) {
-      console.error(error);
-      setMessage(
-        'sellerMessage',
-        'Impossible d’envoyer la candidature. Vérifie la structure de la table et ses politiques de sécurité Supabase.'
-      );
-      return;
-    }
-
-    setMessage(
-      'sellerMessage',
-      'Candidature envoyée ! Elle doit être examinée avant toute autorisation de vente.',
-      true
-    );
-
-    this.reset();
-  }
-);
-
-document.getElementById('ticketForm').addEventListener(
-  'submit',
-  async function(event) {
-    event.preventDefault();
-
-    if (!requireLogin()) return;
-
-    const role = currentSession.user.app_metadata?.role;
-
-    if (role !== 'seller' && role !== 'admin') {
-      setMessage(
-        'ticketMessage',
-        'Tu dois d’abord obtenir l’autorisation de vendre.'
-      );
-      return;
-    }
-
-    const title =
-      document.getElementById('ticketTitle').value.trim();
-
-    const sport =
-      document.getElementById('ticketSport').value;
-
-    const city =
-      document.getElementById('ticketCity').value.trim();
-
-    const eventDate =
-      document.getElementById('ticketDate').value;
-
-    const price =
-      Number(document.getElementById('ticketPrice').value);
-
-    if (!Number.isFinite(price) || price <= 0) {
-      setMessage('ticketMessage', 'Le prix doit être supérieur à zéro.');
-      return;
-    }
-
-    setMessage('ticketMessage', 'Envoi du billet en cours...', true);
-const { error } = await db
-      .from('tickets')
-      .insert({
-        seller_id: currentSession.user.id,
-        title: title,
-        sport: sport,
-        city: city,
-        event_date: eventDate,
-        price: price,
-        status: 'pending'
-      });
-
-    if (error) {
-      console.error(error);
-      setMessage(
-        'ticketMessage',
-        'Envoi impossible. Vérifie les paramètres Supabase.'
-      );
-      return;
-    }
-
-    setMessage(
-      'ticketMessage',
-      'Billet soumis pour vérification.',
-      true
-    );
-
-    this.reset();
-  }
-);
-
-async function logout() {
-  const { error } = await db.auth.signOut();
-
-  if (error) {
-    alert('Erreur lors de la déconnexion : ' + error.message);
+  if (!email) {
+    showMessage('authMessage', 'Saisis ton adresse e-mail.', 'info');
     return;
   }
 
-  currentSession = null;
-  updateAccountDisplay();
-  showSection('accueil');
-}
+  try {
+    const { error } = await db.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + window.location.pathname
+    });
 
-db.auth.onAuthStateChange((_event, session) => {
-  currentSession = session;
-  updateAccountDisplay();
+    if (error) throw error;
+
+    showMessage('authMessage', 'Si cette adresse existe, un e-mail de réinitialisation sera envoyé.', 'success');
+  } catch (error) {
+    showMessage('authMessage', friendlyError(error), 'error');
+  }
 });
 
-refreshSession();
-</script>
+$('logoutButton').addEventListener('click', async () => {
+  const { error } = await db.auth.signOut();
 
+  if (error) {
+    showMessage('authMessage', friendlyError(error), 'error');
+    return;
+  }
+
+  await updateAuthUI();
+  showMessage('authMessage', 'Déconnexion réussie.', 'success');
+});
+
+$('profileForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  if (!currentUser) return;
+
+  const name = $('profileEditName').value.trim();
+
+  try {
+    const { error: authError } = await db.auth.updateUser({
+      data: { full_name: name }
+    });
+
+    if (authError) throw authError;
+
+    const { error } = await db.from('profiles').upsert({
+      id: currentUser.id,
+      full_name: name,
+      updated_at: new Date().toISOString()
+    }, { onConflict: 'id' });
+
+    if (error) throw error;
+
+    $('profileName').textContent = name;
+    showMessage('profileMessage', 'Profil mis à jour.', 'success');
+  } catch (error) {
+    showMessage('profileMessage', friendlyError(error), 'error');
+  }
+});
+
+async function loadSellerStatus() {
+  sellerApproved = false;
+  $('sellerStatusBox').innerHTML = '';
+
+  if (!currentUser) return;
+
+  try {
+    const { data, error } = await db
+      .from('seller_applications')
+      .select('status')
+      .eq('user_id', currentUser.id)
+      .order('created_at', { ascending: false })
+      .limit(1);
+
+    if (error) throw error;
+
+    const application = data?.[0];
+
+    if (!application) {
+      $('sellerStatusBox').textContent = 'Aucune demande vendeur envoyée.';
+      return;
+    }
+
+    sellerApproved = application.status === 'approved';
+
+    $('sellerStatusBox').textContent =
+      'Statut de la demande : ' + application.status;
+  } catch (error) {
+    $('sellerStatusBox').textContent =
+      'Le statut vendeur sera disponible après configuration de Supabase.';
+  }
+}
+
+$('sellerForm').addEventListener('submit', async event => {
+  event.preventDefault();
+
+  if (!currentUser) {
+    showMessage('sellerMessage', 'Connecte-toi avant de demander le statut vendeur.', 'error');
+    return;
+  }
+
+  const form = event.currentTarget;
+  setLoading(form, true);
+
+  try {
+    const { data: existing, error: checkError } = await db
+      .from('seller_applications')
+      .select('id,status')
+      .eq('user_id', currentUser.id)
+      .in('status', ['pending', 'approved'])
+      .limit(1);
+
+    if (checkError) throw checkError;
+
+    if (existing?.length) {
+      showMessage('sellerMessage', 'Tu as déjà une demande en attente ou approuvée.', 'info');
+      return;
+    }
+
+    const { error } = await db.from('seller_applications').insert({
+      user_id: currentUser.id,
+      full_name: $('sellerName').value.trim(),
+      country: $('sellerCountry').value.trim(),
+      reason: $('sellerReason').value.trim(),
+      status: 'pending'
+    });
+
+    if (error) throw error;
+
+    showMessage('sellerMessage', 'Demande envoyée pour validation.', 'success');
+    form.reset();
+    await loadSellerStatus();
+  } catch (error) {
+    showMessage('sellerMessage', friendlyError(error), 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+$('ticketForm').addEventListener('submit', async event => {
+  event.preventDefault();
+
+  if (!currentUser || !sellerApproved) {
+    showMessage('ticketMessage', 'Tu dois être connecté et approuvé comme vendeur.', 'error');
+    return;
+  }
+
+  const price = Number($('ticketPrice').value);
+
+  if (!Number.isFinite(price) || price <= 0) {
+    showMessage('ticketMessage', 'Le prix doit être supérieur à zéro.', 'error');
+    return;
+  }
+
+  const form = event.currentTarget;
+  setLoading(form, true);
+
+  try {
+    const { error } = await db.from('tickets').insert({
+      seller_id: currentUser.id,
+      event_name: $('ticketEvent').value.trim(),
+      sport: $('ticketSport').value,
+      country: $('ticketCountry').value.trim(),
+      city: $('ticketCity').value.trim(),
+      event_date: $('ticketDate').value,
+      price,
+      description: $('ticketDescription').value.trim(),
+      status: 'pending'
+    });
+
+    if (error) throw error;
+
+    showMessage('ticketMessage', 'Billet soumis pour validation.', 'success');
+    form.reset();
+  } catch (error) {
+    showMessage('ticketMessage', friendlyError(error), 'error');
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+$('contactForm').addEventListener('submit', async event => {
+  event.preventDefault();
+  const form = event.currentTarget;
+  setLoading(form, true);
+
+  try {
+    const { error } = await db.from('contact_messages').insert({
+      name: $('contactName').value.trim(),
+      email: $('contactEmail').value.trim(),
+      subject: $('contactSubject').value.trim(),
+      message: $('contactBody').value.trim()
+    });
+
+    if (error) throw error;
+
+    showMessage('contactMessage', 'Message envoyé. Merci de nous avoir contactés.', 'success');
+    form.reset();
+  } catch (error) {
+    showMessage(
+      'contactMessage',
+      'Envoi impossible. La table contact_messages et ses règles de sécurité doivent être configurées dans Supabase. ' + friendlyError(error),
+      'error'
+    );
+  } finally {
+    setLoading(form, false);
+  }
+});
+
+db.auth.onAuthStateChange(() => {
+  setTimeout(updateAuthUI, 0);
+});
+
+async function init() {
+  await updateAuthUI();
+  await loadEvents();
+}
+
+init();
+</script>
 </body>
 </html>
-   
