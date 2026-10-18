@@ -170,7 +170,8 @@ window.tiaxoraSupabase.auth.onAuthStateChange((event, session) => {
 
   form.style.display = session ? 'none' : 'block';
   status.textContent = session
-    ? 'Bienvenue sur TIAXORA ! Vous êtes connecté.'
+  status.textContent = session
+    ? 'Bienvenue sur TIAXORA ! Connecté avec : ' + session.user.email
     : '';
 });
 </script></body>
