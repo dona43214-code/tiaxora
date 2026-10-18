@@ -1,178 +1,898 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="TIAXORA — Découvrez des billets pour les plus grands événements sportifs.">
-<title>TIAXORA — Your Ticket to the Game</title>
-<style>
-:root{--bg:#07111f;--panel:#101e31;--panel2:#14253b;--gold:#e8bd67;--text:#f7f8fb;--muted:#aab8ca;--line:#293b52;--green:#75e0b2}*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}button,input,select{font:inherit}button{cursor:pointer}.wrap{width:min(1160px,92%);margin:auto}.topbar{border-bottom:1px solid var(--line);background:#07111feF;position:sticky;top:0;z-index:10;backdrop-filter:blur(12px)}.nav{height:76px;display:flex;align-items:center;justify-content:space-between;gap:18px}.brand{font-size:25px;font-weight:900;letter-spacing:2px;color:var(--text);text-decoration:none}.brand span{color:var(--gold)}.navlinks{display:flex;align-items:center;gap:24px}.navlinks a{color:var(--muted);text-decoration:none;font-size:14px}.navlinks a:hover{color:white}.navright{display:flex;align-items:center;gap:10px}.lang{border:1px solid var(--line);background:var(--panel);color:white;border-radius:10px;padding:9px}.btn{border:0;border-radius:11px;padding:12px 17px;font-weight:750;background:var(--gold);color:#17130b}.btn.secondary{background:transparent;color:white;border:1px solid #52647b}.hero{padding:70px 0 42px;background:radial-gradient(ellipse at 75% 10%,#173553 0,transparent 44%),linear-gradient(130deg,#07111f,#0b1a2d 65%,#101b2b)}.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:45px;align-items:center}.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--gold);font-weight:800;font-size:12px;letter-spacing:1.8px;text-transform:uppercase}.dot{width:7px;height:7px;background:var(--green);border-radius:50%;box-shadow:0 0 12px var(--green)}h1{font-size:clamp(42px,6vw,72px);line-height:1.02;letter-spacing:-2.7px;margin:18px 0}.gold{color:var(--gold)}.hero p{font-size:17px;line-height:1.7;color:var(--muted);max-width:590px}.hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:25px}.trust{display:flex;gap:22px;flex-wrap:wrap;margin-top:27px;color:#bdc9d7;font-size:12px}.trust span:before{content:'✓';color:var(--green);margin-right:7px;font-weight:900}.visual{min-height:350px;border:1px solid #34475e;border-radius:25px;padding:20px;background:linear-gradient(145deg,#172a42,#0d192a);position:relative;overflow:hidden;box-shadow:0 25px 70px #0005}.visual:before{content:'';position:absolute;width:330px;height:330px;border:1px solid #ffffff13;border-radius:50%;right:-90px;top:-100px;box-shadow:0 0 0 25px #ffffff05,0 0 0 55px #ffffff04}.visual-head{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:12px}.live{color:var(--green);font-weight:800}.matchbox{position:relative;margin-top:52px;text-align:center}.teams{display:flex;justify-content:center;align-items:center;gap:25px}.team{width:100px}.crest{width:74px;height:74px;margin:auto auto 12px;border-radius:22px;display:grid;place-items:center;font-size:27px;font-weight:900;background:linear-gradient(145deg,#f3d48d,#b9822c);color:#17130b;box-shadow:0 10px 30px #0004}.team:nth-child(3) .crest{background:linear-gradient(145deg,#e9eef8,#7d91b3)}.team b{font-size:13px}.vs{color:var(--gold);font-size:13px;font-weight:900}.matchdate{margin:25px auto 18px;color:var(--muted);font-size:13px}.ticket-preview{display:flex;align-items:center;justify-content:space-between;background:#ffffff0a;border:1px dashed #53657c;border-radius:14px;padding:14px 16px}.ticket-preview small{display:block;color:var(--muted);margin-bottom:4px}.ticket-preview strong{font-size:20px}.ticket-preview .btn{padding:10px 13px;font-size:12px}.section{padding:45px 0}.section-head{display:flex;justify-content:space-between;gap:18px;align-items:end;margin-bottom:23px}.section h2{font-size:30px;margin:7px 0}.sub{color:var(--muted);margin:0;line-height:1.6}.filters{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0}.filter{border:1px solid var(--line);border-radius:999px;background:transparent;color:var(--muted);padding:9px 15px}.filter.active,.filter:hover{background:var(--gold);border-color:var(--gold);color:#17130b;font-weight:800}.searchrow{display:flex;gap:10px;margin:20px 0}.searchrow input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;color:white;outline:none}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:17px}.card{background:var(--panel);border:1px solid var(--line);border-radius:17px;overflow:hidden;transition:.2s}.card:hover{transform:translateY(-3px);border-color:#52657b}.cardtop{padding:17px;background:linear-gradient(130deg,#1b3551,#112238);display:flex;justify-content:space-between;align-items:center}.sporttag{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--gold);font-weight:800}.date{font-size:12px;color:#c0ccda}.cardbody{padding:17px}.eventtitle{font-size:17px;font-weight:850;margin:0 0 7px}.venue{font-size:12px;color:var(--muted);margin-bottom:18px}.price-row{display:flex;justify-content:space-between;align-items:center;gap:10px;border-top:1px solid var(--line);padding-top:14px}.price small{display:block;color:var(--muted);font-size:11px}.price strong{font-size:21px}.card .btn{padding:10px 12px;font-size:12px}.empty{display:none;color:var(--muted);padding:24px;text-align:center}.how{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.step{padding:22px;background:var(--panel);border:1px solid var(--line);border-radius:16px}.num{width:38px;height:38px;display:grid;place-items:center;border-radius:12px;background:#2a2c2b;color:var(--gold);font-weight:900}.step h3{margin:17px 0 8px}.step p{color:var(--muted);font-size:14px;line-height:1.6;margin:0}.sellband{padding:30px;border:1px solid #5a4b2c;border-radius:20px;background:linear-gradient(120deg,#292719,#142238);display:flex;align-items:center;justify-content:space-between;gap:22px}.sellband h2{margin:0 0 8px}.sellband p{color:var(--muted);margin:0;line-height:1.6}.footer{border-top:1px solid var(--line);padding:28px 0;color:var(--muted);font-size:12px}.footrow{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}.notice{font-size:12px;color:#8494a8;line-height:1.6;max-width:850px;margin-top:14px}.modal{display:none;position:fixed;inset:0;background:#000b;z-index:20;padding:18px;align-items:center;justify-content:center}.modal.open{display:flex}.modalbox{width:min(500px,100%);background:#101e31;border:1px solid #41536b;border-radius:20px;padding:24px;max-height:90vh;overflow:auto}.modalhead{display:flex;justify-content:space-between;align-items:center;gap:12px}.close{background:transparent;color:white;border:1px solid var(--line);border-radius:9px;padding:7px 11px}.modalbox p{color:var(--muted);line-height:1.6;font-size:14px}.field{display:block;margin:14px 0}.field span{display:block;font-size:12px;color:#c1ccda;margin-bottom:7px}.field input,.field select{width:100%;padding:12px;background:#07111f;color:white;border:1px solid var(--line);border-radius:10px}.toast{display:none;background:#14352d;border:1px solid #28604f;padding:12px;border-radius:10px;color:#baf5db;font-size:13px;margin-top:12px}.mobilemenu{display:none}
-@media(max-width:800px){.navlinks{display:none}.hero{padding:48px 0 30px}.hero-grid{grid-template-columns:1fr;gap:30px}.visual{min-height:320px}.cards{grid-template-columns:repeat(2,1fr)}.how{grid-template-columns:1fr}.section-head{align-items:start;flex-direction:column}.sellband{align-items:start;flex-direction:column}}
-@media(max-width:520px){.brand{font-size:21px}.nav{height:66px}.navright .btn{padding:10px 11px;font-size:12px}.hero h1{letter-spacing:-1.8px}.hero p{font-size:15px}.cards{grid-template-columns:1fr}.searchrow{flex-direction:column}.teams{gap:13px}.team{width:85px}.crest{width:62px;height:62px;border-radius:18px}.visual{padding:16px}.trust{gap:12px}}
-</style>
-<style>
-.whatsapp-float{position:fixed;right:18px;bottom:18px;z-index:15;display:flex;align-items:center;gap:9px;padding:13px 16px;border-radius:999px;background:#25D366;color:#062b16;text-decoration:none;font-weight:850;box-shadow:0 8px 28px #0006;border:1px solid #7af0a0}
-.whatsapp-float:hover{filter:brightness(1.05);transform:translateY(-1px)}
-</style>
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#071426">
+<meta name="description" content="TIAXORA - Achetez et revendez vos billets de matchs de football.">
+<title>TIAXORA | Billetterie sportive</title>
 
 <style>
-.admin-section{padding:35px 0 55px;background:#091522;border-top:1px solid var(--line)}.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}.admin-card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px;min-width:0}.admin-card h3{margin-top:0}.admin-card input,.admin-card select{width:100%;padding:11px;background:#07111f;color:white;border:1px solid var(--line);border-radius:9px;margin:5px 0 12px}.admin-item{border:1px solid var(--line);border-radius:11px;padding:12px;margin:10px 0;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.admin-item small{color:var(--muted);display:block;margin-top:4px}.admin-actions{display:flex;gap:7px;flex-wrap:wrap}.mini{padding:8px 10px;border-radius:8px;border:1px solid #52647b;background:transparent;color:white}.mini.gold{background:var(--gold);color:#17130b;border:0}.status{font-size:11px;border-radius:999px;padding:4px 8px;background:#453d23;color:#f6d98e}.status.ok{background:#163c30;color:#a9f2d2}.admin-note{font-size:12px;line-height:1.6;color:#f6d98e;background:#302919;border:1px solid #66532d;padding:12px;border-radius:10px;margin-bottom:16px}.admin-section[hidden]{display:none!important}
-@media(max-width:700px){.admin-grid{grid-template-columns:1fr}}
-</style>
+:root {
+  --navy: #071426;
+  --navy2: #102642;
+  --gold: #d8ad52;
+  --white: #ffffff;
+  --muted: #aebbd0;
+  --card: #102039;
+  --green: #32c48d;
+  --red: #ff6b6b;
+}
 
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: var(--navy);
+  color: var(--white);
+  line-height: 1.6;
+}
+
+button, input, select, textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+header {
+  background: #050e1c;
+  border-bottom: 1px solid #253650;
+  padding: 14px 5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.logo {
+  font-size: 25px;
+  font-weight: 900;
+  color: var(--gold);
+  letter-spacing: 1px;
+  text-decoration: none;
+}
+
+.logo span {
+  color: white;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profile-button {
+  background: var(--navy2);
+  border: 1px solid var(--gold);
+  color: white;
+  padding: 9px 12px;
+  border-radius: 8px;
+}
+
+.profile-menu {
+  display: none;
+  position: absolute;
+  right: 5%;
+  top: 68px;
+  background: #102039;
+  border: 1px solid #35445a;
+  border-radius: 10px;
+  min-width: 205px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px #0008;
+}
+
+.profile-menu button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px;
+  border: none;
+  background: transparent;
+  color: white;
+}
+
+.profile-menu button:hover {
+  background: #1b3150;
+  color: var(--gold);
+}
+
+.hero {
+  padding: 65px 6% 55px;
+  text-align: center;
+  background:
+    radial-gradient(ellipse at top, #173352 0%, #071426 70%);
+}
+
+.badge {
+  display: inline-block;
+  border: 1px solid var(--gold);
+  color: var(--gold);
+  border-radius: 30px;
+  padding: 5px 14px;
+  font-size: 12px;
+  margin-bottom: 18px;
+}
+
+.hero h1 {
+  font-size: clamp(32px, 7vw, 58px);
+  line-height: 1.15;
+  margin-bottom: 18px;
+}
+
+.hero h1 span {
+  color: var(--gold);
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 0 auto 25px;
+  color: var(--muted);
+}
+
+.btn {
+  display: inline-block;
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  margin: 4px;
+}
+
+.btn-gold {
+  background: var(--gold);
+  color: #071426;
+}
+
+.btn-dark {
+  background: #1b3150;
+  color: white;
+  border: 1px solid #40516a;
+}
+
+.btn-red {
+  background: #652d38;
+  color: white;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+section {
+  padding: 38px 0;
+}
+
+.section-title {
+  font-size: 26px;
+  margin-bottom: 8px;
+}
+
+.section-description {
+  color: var(--muted);
+  margin-bottom: 22px;
+}
+
+.notice {
+  background: #2b2517;
+  border: 1px solid #80672f;
+  color: #f5d99b;
+  padding: 12px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-size: 13px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid #293b55;
+  border-radius: 13px;
+  padding: 20px;
+}
+
+.card h3 {
+  margin: 12px 0 6px;
+}
+
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.match {
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
+  margin: 15px 0;
+}
+
+.match small {
+  display: block;
+  color: var(--gold);
+  font-size: 12px;
+  margin-top: 7px;
+}
+
+.price {
+  font-size: 23px;
+  color: var(--gold);
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+.tag {
+  font-size: 11px;
+  background: #263c55;
+  color: #dbe6f6;
+  border-radius: 20px;
+  padding: 4px 9px;
+}
+
+.form-card {
+  max-width: 620px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  font-size: 14px;
+  margin: 12px 0 5px;
+}
+
+input, select, textarea {
+  width: 100%;
+  background: #071426;
+  border: 1px solid #354964;
+  border-radius: 7px;
+  color: white;
+  padding: 12px;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: var(--gold);
+}
+
+textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.form-message {
+  margin-top: 12px;
+  font-size: 14px;
+  overflow-wrap: anywhere;
+}
+
+.success {
+  color: var(--green);
+}
+
+.error {
+  color: var(--red);
+}
+
+.muted {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.panel {
+  background: #0d1d32;
+  border: 1px solid #283c56;
+  padding: 18px;
+  border-radius: 10px;
+  margin-top: 16px;
+}
+
+footer {
+  border-top: 1px solid #253650;
+  text-align: center;
+  padding: 30px 5%;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+footer strong {
+  color: var(--gold);
+}
+
+@media (max-width: 480px) {
+  header {
+    padding: 12px 4%;
+  }
+
+  .logo {
+    font-size: 21px;
+  }
+
+  .profile-button {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .hero {
+    padding-top: 48px;
+  }
+}
+</style>
 </head>
+
 <body>
-<header class="topbar"><div class="wrap nav"><a class="brand" href="#home">TIA<span>X</span>ORA</a><nav class="navlinks"><a href="#events" data-i="navEvents">Événements</a><a href="#how" data-i="navHow">Comment ça marche</a><a href="#sell" data-i="navSell">Vendre un billet</a></nav><div class="navright"><select class="lang" id="language" aria-label="Language"><option value="fr">FR</option><option value="en">EN</option></select><button class="btn" id="sellTop" data-i="sellBtn">Vendre un billet</button></div></div></header>
-<main id="home"><section class="hero"><div class="wrap hero-grid"><div><div class="eyebrow"><span class="dot"></span><span data-i="eyebrow">La billetterie sportive nouvelle génération</span></div><h1 data-html="heroTitle">Le sport en direct.<br><span class="gold">L'émotion en grand.</span></h1><p data-i="heroText">Découvrez des billets pour les plus grands événements sportifs. Trouvez votre place, vivez le moment et partagez la passion.</p><div class="hero-actions"><a class="btn" href="#events" data-i="exploreBtn">Explorer les événements →</a><button class="btn secondary" id="sellHero" data-i="sellTicketBtn">Proposer un billet</button></div><div class="trust"><span data-i="trust1">Une expérience simple</span><span data-i="trust2">Annonces à vérifier</span><span data-i="trust3">Pensé pour l'international</span></div></div><div class="visual"><div class="visual-head"><span>TIAXORA / MATCH CENTER</span><span class="live">● <span data-i="demo">APERÇU</span></span></div><div class="matchbox"><div class="teams"><div class="team"><div class="crest">FC</div><b>FC BARCELONA</b></div><div class="vs">VS</div><div class="team"><div class="crest">RM</div><b>REAL MADRID</b></div></div><div class="matchdate" data-i="matchDemo">EXEMPLE DE MATCH · DATE À CONFIRMER</div><div class="ticket-preview"><div><small data-i="fromPrice">Billets à partir de</small><strong>€ 85</strong></div><button class="btn" onclick="scrollEvents()" data-i="viewTickets">Voir les billets</button></div></div></div></div></section>
-<section class="section" id="events"><div class="wrap"><div class="section-head"><div><div class="eyebrow" data-i="discover">À découvrir</div><h2 data-i="eventsTitle">Événements à la une</h2><p class="sub" data-i="eventsSub">Explorez les annonces de billets par sport et trouvez votre prochain événement.</p></div></div><div class="filters" id="filters"><button class="filter active" data-sport="all" data-i="allSports">Tous les sports</button><button class="filter" data-sport="football">⚽ Football</button><button class="filter" data-sport="basketball">🏀 Basketball</button><button class="filter" data-sport="tennis">🎾 Tennis</button><button class="filter" data-sport="formula1">🏎️ Formule 1</button><button class="filter" data-sport="boxing">🥊 Boxe</button><button class="filter" data-sport="rugby">🏉 Rugby</button></div><div class="searchrow"><input id="search" type="search" placeholder="Rechercher un match, une ville ou un sport…" data-placeholder="searchPlaceholder"><button class="btn" id="searchBtn" data-i="searchBtn">Rechercher</button></div><div class="cards" id="cards"></div><div class="empty" id="empty" data-i="empty">Aucun événement ne correspond à votre recherche.</div><p class="notice" data-i="demoNotice">Démonstration : les événements et prix ci-dessous sont fictifs. Aucune vente réelle ni aucun paiement n'est activé dans cette première version.</p></div></section>
-<section class="section" id="how"><div class="wrap"><div class="eyebrow" data-i="simple">Simple et pratique</div><h2 data-i="howTitle">Comment fonctionne TIAXORA ?</h2><div class="how"><div class="step"><div class="num">01</div><h3 data-i="step1Title">Trouvez un événement</h3><p data-i="step1Text">Recherchez votre sport, votre événement et la ville qui vous intéresse.</p></div><div class="step"><div class="num">02</div><h3 data-i="step2Title">Comparez les annonces</h3><p data-i="step2Text">Consultez les prix, les catégories et les informations fournies par les vendeurs.</p></div><div class="step"><div class="num">03</div><h3 data-i="step3Title">Achetez en confiance</h3><p data-i="step3Text">Avant toute transaction, les annonces et les règles de transfert doivent être vérifiées.</p></div></div></div></section>
-<section class="section" id="sell"><div class="wrap"><div class="sellband"><div><h2 data-i="sellTitle">Vous avez un billet à vendre ?</h2><p data-i="sellText">Préparez votre annonce et rejoignez la prochaine étape de TIAXORA.</p></div><div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" id="sellBandBtn" data-i="startSelling">Proposer un billet</button><button class="btn secondary" id="sellerApplyBtn">Demander à devenir vendeur</button></div></div></div></section>
-<section class="admin-section" id="adminDemo"><div class="wrap"><div class="eyebrow">TIAXORA / ADMIN</div><h2>Espace de gestion — démonstration</h2><div class="admin-note">Prototype local uniquement : les données sont enregistrées dans ce navigateur sur cet appareil. Cet espace n'est PAS sécurisé et n'est pas connecté à Internet. Ne l'utilise pas pour de vraies commandes ou des données personnelles réelles. Une vraie version nécessitera une authentification sécurisée et une base de données.</div><div class="admin-grid"><div class="admin-card"><h3>Demandes vendeurs</h3><p class="sub">Valide ou refuse les demandes de démonstration.</p><div id="sellerRequests"><p class="sub">Aucune demande pour le moment.</p></div></div><div class="admin-card"><h3>Ajouter un billet (administrateur)</h3><form id="adminListingForm"><label class="field"><span>Événement</span><input required name="event" placeholder="Ex. Finale de coupe" /></label><label class="field"><span>Sport</span><select name="sport"><option value="football">Football</option><option value="basketball">Basketball</option><option value="tennis">Tennis</option><option value="formula1">Formule 1</option><option value="boxing">Boxe</option><option value="rugby">Rugby</option><option value="other">Autre</option></select></label><label class="field"><span>Ville / pays</span><input required name="city" placeholder="Ex. Paris, France" /></label><label class="field"><span>Prix (€)</span><input required name="price" type="number" min="1" step="0.01" placeholder="100" /></label><button class="btn" type="submit">Ajouter le billet</button><div class="toast" id="adminToast" aria-live="polite"></div></form></div></div><div class="admin-card" style="margin-top:18px"><h3>Annonces de démonstration et prix</h3><p class="sub">Tu peux tester la modification et la suppression des annonces enregistrées localement.</p><div id="adminListings"></div></div></div></section></main>
-<footer class="footer"><div class="wrap"><div class="footrow"><a class="brand" href="#home">TIA<span>X</span>ORA</a><span data-i="tagline">Your Ticket to the Game.</span><span>© <span id="year"></span> TIAXORA</span></div><p class="notice" data-i="legal">TIAXORA est une maquette de démonstration. Elle n'est affiliée à aucun club, organisateur ou compétition mentionné. Les noms d'équipes et événements éventuels sont utilisés à titre illustratif. La revente de billets doit respecter les règles de l'organisateur et la loi applicable.</p></div></footer>
-<a class="whatsapp-float" href="#" id="whatsappContact" aria-label="Contacter TIAXORA sur WhatsApp">☏ <span data-i="whatsappLabel">Contacter TIAXORA</span></a>
-<div class="modal" id="sellerModal" role="dialog" aria-modal="true" aria-labelledby="sellerModalTitle"><div class="modalbox"><div class="modalhead"><h2 id="sellerModalTitle">Demander à devenir vendeur</h2><button class="close" id="closeSellerModal">✕</button></div><p>Cette demande de démonstration sera enregistrée uniquement sur cet appareil. N'envoie pas de documents d'identité dans cette version.</p><form id="sellerForm"><label class="field"><span>Nom ou nom commercial</span><input required name="name" maxlength="100" placeholder="Nom du vendeur" /></label><label class="field"><span>E-mail</span><input required name="email" type="email" maxlength="150" placeholder="vous@exemple.com" /></label><label class="field"><span>Pays</span><input required name="country" maxlength="80" placeholder="Pays de résidence" /></label><label class="field"><span>Pourquoi souhaitez-vous vendre sur TIAXORA ?</span><input required name="reason" maxlength="250" placeholder="Décrivez brièvement votre activité" /></label><button class="btn" type="submit">Envoyer la demande</button><div class="toast" id="sellerToast" aria-live="polite"></div></form></div></div>
-<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalbox"><div class="modalhead"><h2 id="modalTitle" data-i="sellModalTitle">Proposer un billet</h2><button class="close" id="closeModal">✕</button></div><p data-i="modalIntro">Cette première version est une maquette : le formulaire vous aide à définir une annonce, mais ne la publie pas en ligne.</p><form id="listingForm"><label class="field"><span data-i="eventLabel">Événement</span><input required name="event" placeholder="Ex. finale de coupe" /></label><label class="field"><span data-i="sportLabel">Sport</span><select name="sport"><option>Football</option><option>Basketball</option><option>Tennis</option><option>Formule 1</option><option>Boxe</option><option>Rugby</option><option>Autre</option></select></label><label class="field"><span data-i="cityLabel">Ville / pays</span><input required name="city" placeholder="Ex. Paris, France" /></label><label class="field"><span data-i="priceLabel">Prix demandé (EUR, indicatif)</span><input required name="price" type="number" min="1" step="0.01" placeholder="100" /></label><label class="field"><span data-i="emailLabel">E-mail de contact (facultatif)</span><input name="email" type="email" placeholder="vous@exemple.com" /></label><button class="btn" type="submit" data-i="previewListing">Prévisualiser l'annonce</button><div class="toast" id="toast" aria-live="polite"></div></form></div></div>
+
+<header>
+  <a href="#accueil" class="logo">TIA<span>X</span>ORA</a>
+
+  <div class="header-right">
+    <button class="profile-button" onclick="toggleMenu()">
+      ☰ Mon compte
+    </button>
+  </div>
+
+  <div class="profile-menu" id="profileMenu">
+    <button onclick="showSection('profil')">👤 Mon profil</button>
+    <button onclick="showSection('commandes')">🎟️ Mes commandes</button>
+    <button onclick="showSection('vendeur')">🤝 Devenir vendeur</button>
+    <button onclick="showSection('espaceVendeur')">🏪 Mon espace vendeur</button>
+    <button onclick="showSection('administration')">⚙️ Administration</button>
+    <button onclick="logout()">🚪 Déconnexion</button>
+  </div>
+</header>
+
+<main>
+
+<section class="hero" id="accueil">
+  <div class="badge">LA PASSION DU FOOTBALL, PARTOUT</div>
+
+  <h1>Vivez le match.<br><span>Ne ratez rien.</span></h1>
+
+  <p>
+    Découvrez TIAXORA, votre future plateforme internationale
+    pour acheter et revendre des billets d'événements sportifs.
+  </p>
+
+  <a href="#matchs" class="btn btn-gold">Découvrir les matchs</a>
+  <button class="btn btn-dark" onclick="showSection('auth')">
+    Créer un compte
+  </button>
+</section>
+
+<section id="matchs">
+  <div class="container">
+    <h2 class="section-title">Les événements</h2>
+    <p class="section-description">
+      Découvrez notre présentation des événements sportifs.
+    </p>
+
+    <div class="notice">
+      ⚠️ Les rencontres ci-dessous sont des exemples de démonstration.
+      Aucun billet réel n'est proposé à la vente pour le moment.
+    </div>
+
+    <div class="grid">
+
+      <article class="card">
+        <span class="tag">EXEMPLE</span>
+        <div class="match">⚽<br>Real Madrid<br><small>VS</small> FC Barcelone</div>
+        <p>Football · Espagne</p>
+        <p>Date : à confirmer</p>
+        <div class="price">Prix à confirmer</div>
+        <button class="btn btn-gold" onclick="buyTicket()">
+          Acheter un billet
+        </button>
+      </article>
+
+      <article class="card">
+        <span class="tag">EXEMPLE</span>
+        <div class="match">⚽<br>Manchester City<br><small>VS</small> Arsenal</div>
+        <p>Football · Angleterre</p>
+        <p>Date : à confirmer</p>
+        <div class="price">Prix à confirmer</div>
+        <button class="btn btn-gold" onclick="buyTicket()">
+          Acheter un billet
+        </button>
+      </article>
+
+      <article class="card">
+        <span class="tag">EXEMPLE</span>
+        <div class="match">⚽<br>PSG<br><small>VS</small> Marseille</div>
+        <p>Football · France</p>
+        <p>Date : à confirmer</p>
+        <div class="price">Prix à confirmer</div>
+        <button class="btn btn-gold" onclick="buyTicket()">
+          Acheter un billet
+        </button>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="auth" class="hidden">
+  <div class="container">
+    <div class="card form-card">
+      <h2 class="section-title">Ton compte TIAXORA</h2>
+      <p class="section-description">
+        Connecte-toi ou crée ton compte.
+      </p>
+
+      <form id="signupForm">
+        <h3>Créer un compte</h3>
+
+        <label for="signupName">Nom complet</label>
+        <input id="signupName" type="text" required maxlength="100">
+
+        <label for="signupEmail">Adresse e-mail</label>
+        <input id="signupEmail" type="email" required>
+
+        <label for="signupPassword">Mot de passe</label>
+        <input id="signupPassword" type="password" minlength="8" required>
+
+        <button class="btn btn-gold" type="submit">
+          Créer mon compte
+        </button>
+      </form>
+
+      <hr style="border-color:#354964;margin:25px 0">
+
+      <form id="loginForm">
+        <h3>Déjà inscrit ?</h3>
+
+        <label for="loginEmail">Adresse e-mail</label>
+        <input id="loginEmail" type="email" required>
+
+        <label for="loginPassword">Mot de passe</label>
+        <input id="loginPassword" type="password" required>
+
+        <button class="btn btn-gold" type="submit">
+          Me connecter
+        </button>
+      </form>
+
+      <p id="authMessage" class="form-message"></p>
+    </div>
+  </div>
+</section>
+
+<section id="profil" class="hidden">
+  <div class="container">
+    <div class="card">
+      <h2 class="section-title">Mon profil</h2>
+      <div id="profileDetails">Connecte-toi pour afficher ton profil.</div>
+    </div>
+  </div>
+</section>
+
+<section id="commandes" class="hidden">
+  <div class="container">
+    <div class="card">
+      <h2 class="section-title">Mes commandes</h2>
+      <p class="section-description">
+        Tes commandes apparaîtront ici lorsque le système de commande
+        sécurisé sera mis en place.
+      </p>
+      <div class="notice">
+        Les achats et paiements réels ne sont pas encore activés.
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="vendeur" class="hidden">
+  <div class="container">
+    <div class="card form-card">
+      <h2 class="section-title">Devenir vendeur</h2>
+      <p class="section-description">
+        Soumets ta candidature pour vendre sur TIAXORA.
+      </p>
+
+      <form id="sellerForm">
+        <label for="sellerName">Nom complet</label>
+        <input id="sellerName" required maxlength="100">
+
+        <label for="sellerCountry">Pays</label>
+        <input id="sellerCountry" required maxlength="100">
+
+        <label for="sellerReason">Pourquoi souhaites-tu devenir vendeur ?</label>
+        <textarea id="sellerReason" required maxlength="1500"></textarea>
+
+        <button class="btn btn-gold" type="submit">
+          Envoyer ma candidature
+        </button>
+      </form>
+
+      <p id="sellerMessage" class="form-message"></p>
+    </div>
+  </div>
+</section>
+
+<section id="espaceVendeur" class="hidden">
+  <div class="container">
+    <div class="card form-card">
+      <h2 class="section-title">Mon espace vendeur</h2>
+
+      <div class="notice">
+        La mise en vente est réservée aux vendeurs autorisés par
+        l'administration.
+      </div>
+
+      <form id="ticketForm">
+        <label for="ticketTitle">Nom du match ou de l'événement</label>
+        <input id="ticketTitle" required maxlength="150">
+
+        <label for="ticketSport">Sport</label>
+        <select id="ticketSport" required>
+          <option value="">Choisir un sport</option>
+          <option value="Football">Football</option>
+          <option value="Basketball">Basketball</option>
+          <option value="Tennis">Tennis</option>
+          <option value="Autre">Autre</option>
+        </select>
+
+        <label for="ticketCity">Ville de l'événement</label>
+        <input id="ticketCity" required maxlength="100">
+
+        <label for="ticketDate">Date de l'événement</label>
+        <input id="ticketDate" type="date" required>
+
+        <label for="ticketPrice">Prix du billet</label>
+        <input id="ticketPrice" type="number" min="0.01" step="0.01" required>
+
+        <button class="btn btn-gold" type="submit">
+          Soumettre le billet
+        </button>
+      </form>
+
+      <p id="ticketMessage" class="form-message"></p>
+    </div>
+  </div>
+</section>
+
+<section id="administration" class="hidden">
+  <div class="container">
+    <div class="card">
+      <h2 class="section-title">Administration</h2>
+
+      <p class="section-description">
+        Espace réservé au compte administrateur autorisé côté serveur.
+      </p>
+
+      <div id="adminDetails">
+        Vérification de tes autorisations...
+      </div>
+
+      <div class="notice">
+        Les permissions doivent être contrôlées par Supabase et ses
+        politiques de sécurité. Masquer cette section ne suffit pas
+        à sécuriser une plateforme.
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <p><strong>TIAXORA</strong> — La passion du sport, sans frontières.</p>
+  <p>© <span id="year"></span> TIAXORA. Tous droits réservés.</p>
+  <p style="margin-top:8px">
+    Plateforme en développement — achats réels non activés.
+  </p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <script>
-// Configuration à compléter avant publication : numéro WhatsApp au format international, chiffres uniquement.
-const TIAXORA_WHATSAPP_NUMBER = '40778226803'; // Numéro WhatsApp TIAXORA au format international, chiffres uniquement
-const seedEvents=[
- {sport:'football',icon:'⚽',date:'DATE À CONFIRMER',title:'Grand match européen',venue:'Stade · Europe',price:85},
- {sport:'football',icon:'⚽',date:'DATE À CONFIRMER',title:'Finale de coupe — exemple',venue:'Stade · Ville à confirmer',price:140},
- {sport:'basketball',icon:'🏀',date:'DATE À CONFIRMER',title:'Match de basketball',venue:'Arena · États-Unis',price:95},
- {sport:'tennis',icon:'🎾',date:'DATE À CONFIRMER',title:'Tournoi international de tennis',venue:'Court central · Europe',price:110},
- {sport:'formula1',icon:'🏎️',date:'DATE À CONFIRMER',title:'Grand Prix de Formule 1',venue:'Circuit · Europe',price:180},
- {sport:'boxing',icon:'🥊',date:'DATE À CONFIRMER',title:'Soirée internationale de boxe',venue:'Arena · Ville à confirmer',price:125},
- {sport:'rugby',icon:'🏉',date:'DATE À CONFIRMER',title:'Rencontre internationale de rugby',venue:'Stade · Europe',price:70},
- {sport:'basketball',icon:'🏀',date:'DATE À CONFIRMER',title:'Basketball — match de saison',venue:'Arena · Europe',price:65},
- {sport:'tennis',icon:'🎾',date:'DATE À CONFIRMER',title:'Tournoi de tennis — session',venue:'Complexe sportif',price:75}
-];
-const STORAGE_KEY='tiaxora_demo_v4';
-function loadStore(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY))||{listings:[],sellers:[]}}catch(e){return {listings:[],sellers:[]}}}
-function saveStore(s){localStorage.setItem(STORAGE_KEY,JSON.stringify(s))}
-let store=loadStore();
-let currentSport='all', lang='fr';
-const translations={fr:{navEvents:'Événements',navHow:'Comment ça marche',navSell:'Vendre un billet',sellBtn:'Vendre un billet',eyebrow:'La billetterie sportive nouvelle génération',heroTitle:'Le sport en direct.<br><span class="gold">L’émotion en grand.</span>',heroText:'Découvrez des billets pour les plus grands événements sportifs. Trouvez votre place, vivez le moment et partagez la passion.',exploreBtn:'Explorer les événements →',sellTicketBtn:'Proposer un billet',trust1:'Une expérience simple',trust2:'Annonces à vérifier',trust3:'Pensé pour l’international',demo:'APERÇU',matchDemo:'EXEMPLE DE MATCH · DATE À CONFIRMER',fromPrice:'Billets à partir de',viewTickets:'Voir les billets',discover:'À découvrir',eventsTitle:'Événements à la une',eventsSub:'Explorez les annonces de billets par sport et trouvez votre prochain événement.',allSports:'Tous les sports',searchPlaceholder:'Rechercher un match, une ville ou un sport…',searchBtn:'Rechercher',empty:'Aucun événement ne correspond à votre recherche.',demoNotice:'Démonstration : les événements et prix de départ sont fictifs. Les annonces ajoutées ici restent locales à cet appareil. Aucune vente réelle ni aucun paiement n’est activé.',simple:'Simple et pratique',howTitle:'Comment fonctionne TIAXORA ?',step1Title:'Trouvez un événement',step1Text:'Recherchez votre sport, votre événement et la ville qui vous intéresse.',step2Title:'Comparez les annonces',step2Text:'Consultez les prix, les catégories et les informations fournies par les vendeurs.',step3Title:'Achetez en confiance',step3Text:'Avant toute transaction, les annonces et les règles de transfert doivent être vérifiées.',sellTitle:'Vous avez un billet à vendre ?',sellText:'Préparez votre annonce et rejoignez la prochaine étape de TIAXORA.',startSelling:'Commencer à vendre →',tagline:'Your Ticket to the Game.',legal:'TIAXORA est une maquette de démonstration. Elle n’est affiliée à aucun club, organisateur ou compétition mentionné. Les noms d’équipes et événements éventuels sont utilisés à titre illustratif. La revente de billets doit respecter les règles de l’organisateur et la loi applicable.',sellModalTitle:'Proposer un billet',modalIntro:'Cette première version est une maquette : le formulaire vous aide à définir une annonce, mais ne la publie pas en ligne.',eventLabel:'Événement',sportLabel:'Sport',cityLabel:'Ville / pays',priceLabel:'Prix demandé (EUR, indicatif)',emailLabel:'E-mail de contact (facultatif)',previewListing:'Prévisualiser l’annonce',from:'À partir de',buy:'Détails',date:'DATE À CONFIRMER',listingPreview:'Aperçu créé localement :',contact:'Contact',searchNo:'Aucun résultat.',whatsappLabel:'Contacter TIAXORA'},en:{navEvents:'Events',navHow:'How it works',navSell:'Sell a ticket',sellBtn:'Sell a ticket',eyebrow:'The next generation sports ticket marketplace',heroTitle:'Live sport.<br><span class="gold">Bigger emotions.</span>',heroText:'Discover tickets for major sporting events. Find your seat, live the moment and share the passion.',exploreBtn:'Explore events →',sellTicketBtn:'List a ticket',trust1:'Simple experience',trust2:'Listings need verification',trust3:'Built for international fans',demo:'PREVIEW',matchDemo:'MATCH EXAMPLE · DATE TO BE CONFIRMED',fromPrice:'Tickets from',viewTickets:'View tickets',discover:'Discover',eventsTitle:'Featured events',eventsSub:'Browse ticket listings by sport and find your next event.',allSports:'All sports',searchPlaceholder:'Search a match, city or sport…',searchBtn:'Search',empty:'No events match your search.',demoNotice:'Demo: initial events and prices are fictional. Listings added here stay in this browser on this device. Real sales and payments are not enabled.',simple:'Simple and practical',howTitle:'How does TIAXORA work?',step1Title:'Find an event',step1Text:'Search for your sport, event and preferred city.',step2Title:'Compare listings',step2Text:'Review prices, ticket categories and seller-provided details.',step3Title:'Buy with confidence',step3Text:'Listings and transfer rules must be checked before any transaction.',sellTitle:'Have a ticket to sell?',sellText:'Prepare your listing and be part of the next stage of TIAXORA.',startSelling:'Start selling →',tagline:'Your Ticket to the Game.',legal:'TIAXORA is a demonstration prototype. It is not affiliated with any club, organizer or competition mentioned. Team and event names, if any, are illustrative only. Ticket resale must follow the organizer’s rules and applicable law.',sellModalTitle:'List a ticket',modalIntro:'This first version is a prototype: the form helps you draft a listing, but does not publish it online.',eventLabel:'Event',sportLabel:'Sport',cityLabel:'City / country',priceLabel:'Asking price (EUR, indicative)',emailLabel:'Contact email (optional)',previewListing:'Preview listing',from:'From',buy:'Details',date:'DATE TO BE CONFIRMED',listingPreview:'Local preview created:',contact:'Contact',searchNo:'No results found.',whatsappLabel:'Contact TIAXORA'}};
-function t(k){return (translations[lang]&&translations[lang][k])||translations.fr[k]||k}
-function allEvents(){return seedEvents.concat(store.listings.filter(x=>x.status==='approved').map(x=>({id:x.id,sport:x.sport,icon:({football:'⚽',basketball:'🏀',tennis:'🎾',formula1:'🏎️',boxing:'🥊',rugby:'🏉',other:'🎟️'})[x.sport]||'🎟️',date:'DATE À CONFIRMER',title:x.title,venue:x.city,price:Number(x.price),sellerListing:true})));}
-function render(){const q=document.getElementById('search').value.trim().toLowerCase();const list=allEvents().filter(e=>(currentSport==='all'||e.sport===currentSport)&&(!q||(e.title+' '+e.venue+' '+e.sport).toLowerCase().includes(q)));document.getElementById('cards').innerHTML=list.map(e=>`<article class="card"><div class="cardtop"><span class="sporttag">${e.icon} ${e.sport==='formula1'?'FORMULE 1':e.sport.toUpperCase()}</span><span class="date">${t('date')}</span></div><div class="cardbody"><h3 class="eventtitle">${escapeHtml(e.title)}</h3><div class="venue">📍 ${escapeHtml(e.venue)}</div><div class="price-row"><div class="price"><small>${t('from')}</small><strong>€${Number(e.price).toFixed(2).replace(/\.00$/,'')}</strong></div><button class="btn detailBtn" data-title="${escapeAttr(e.title)}" data-price="${e.price}">${t('buy')}</button></div></div></article>`).join('');document.getElementById('empty').style.display=list.length?'none':'block';document.querySelectorAll('.detailBtn').forEach(b=>b.addEventListener('click',()=>{const msg=lang==='fr'?`Bonjour TIAXORA, je souhaite des informations sur : ${b.dataset.title} (prix affiché : €${b.dataset.price}).`:`Hello TIAXORA, I would like information about: ${b.dataset.title} (listed price: €${b.dataset.price}).`;window.open('https://wa.me/'+TIAXORA_WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg),'_blank','noopener');}));renderAdmin();}
-function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function escapeAttr(s){return escapeHtml(s).replace(/`/g,'&#96;');}
-function renderAdmin(){const sr=document.getElementById('sellerRequests');if(!sr)return;const pending=store.sellers.filter(s=>s.status==='pending');sr.innerHTML=pending.length?pending.map(s=>`<div class="admin-item"><div><strong>${escapeHtml(s.name)}</strong><small>${escapeHtml(s.email)} · ${escapeHtml(s.country)}<br>${escapeHtml(s.reason)}</small><span class="status">En attente</span></div><div class="admin-actions"><button class="mini gold" data-seller-action="approve" data-id="${s.id}">Approuver</button><button class="mini" data-seller-action="reject" data-id="${s.id}">Refuser</button></div></div>`).join(''):'<p class="sub">Aucune demande en attente.</p>';const al=document.getElementById('adminListings');const custom=store.listings;al.innerHTML=custom.length?custom.map(x=>`<div class="admin-item"><div><strong>${escapeHtml(x.title)}</strong><small>${escapeHtml(x.city)} · ${escapeHtml(x.sport)} · €${Number(x.price).toFixed(2)} · ${x.owner==='admin'?'Ton annonce':'Annonce vendeur'}</small><span class="status ${x.status==='approved'?'ok':''}">${x.status==='approved'?'Visible dans la démo':x.status==='rejected'?'Refusée':'En attente'}</span></div><div class="admin-actions"><button class="mini" data-list-action="price" data-id="${x.id}">Modifier prix</button>${x.status!=='approved'?'<button class="mini gold" data-list-action="approve" data-id="'+x.id+'">Publier</button>':''}<button class="mini" data-list-action="delete" data-id="${x.id}">Supprimer</button></div></div>`).join(''):'<p class="sub">Aucune annonce créée dans la démonstration locale.</p>';}
-
-function setLang(l){lang=l;document.documentElement.lang=l;document.querySelectorAll('[data-i]').forEach(el=>{const k=el.dataset.i;if(translations[l][k])el.textContent=translations[l][k]});document.querySelectorAll('[data-html]').forEach(el=>{const k=el.dataset.html;if(translations[l][k])el.innerHTML=translations[l][k]});document.querySelectorAll('[data-placeholder]').forEach(el=>el.placeholder=translations[l][el.dataset.placeholder]);render();}
-document.getElementById('language').addEventListener('change',e=>setLang(e.target.value));document.querySelectorAll('.filter').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filter').forEach(x=>x.classList.remove('active'));b.classList.add('active');currentSport=b.dataset.sport;render()}));document.getElementById('searchBtn').addEventListener('click',render);document.getElementById('search').addEventListener('input',render);function scrollEvents(){document.getElementById('events').scrollIntoView({behavior:'smooth'})}window.scrollEvents=scrollEvents;
-const modal=document.getElementById('modal');function openModal(){modal.classList.add('open');document.getElementById('toast').style.display='none'}function closeModal(){modal.classList.remove('open')}document.getElementById('sellTop').onclick=openModal;document.getElementById('sellHero').onclick=openModal;document.getElementById('sellBandBtn').onclick=openModal;document.getElementById('closeModal').onclick=closeModal;modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});document.getElementById('listingForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);const msg=`${t('listingPreview')} ${f.get('event')} · ${f.get('city')} · €${f.get('price')}. ${t('contact')}: ${f.get('email')||'—'}.`;const toast=document.getElementById('toast');toast.textContent=msg+' Cette prévisualisation ne publie pas l’annonce.';toast.style.display='block'});
-const sellerModal=document.getElementById('sellerModal');function openSellerModal(){sellerModal.classList.add('open');document.getElementById('sellerToast').style.display='none'}function closeSellerModal(){sellerModal.classList.remove('open')}document.getElementById('sellerApplyBtn').onclick=openSellerModal;document.getElementById('closeSellerModal').onclick=closeSellerModal;sellerModal.addEventListener('click',e=>{if(e.target===sellerModal)closeSellerModal()});document.getElementById('sellerForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);store.sellers.push({id:Date.now().toString(),name:f.get('name'),email:f.get('email'),country:f.get('country'),reason:f.get('reason'),status:'pending'});saveStore(store);const toast=document.getElementById('sellerToast');toast.textContent='Demande enregistrée dans cette démonstration locale. Elle ne sera visible que dans ce navigateur.';toast.style.display='block';e.target.reset();renderAdmin()});
-document.getElementById('adminListingForm').addEventListener('submit',e=>{e.preventDefault();const f=new FormData(e.target);store.listings.push({id:Date.now().toString(),title:f.get('event'),sport:f.get('sport'),city:f.get('city'),price:Number(f.get('price')),owner:'admin',status:'approved'});saveStore(store);const toast=document.getElementById('adminToast');toast.textContent='Annonce ajoutée à la démonstration locale. Elle apparaît dans le catalogue de cet appareil seulement.';toast.style.display='block';e.target.reset();render()});
-document.getElementById('adminDemo').addEventListener('click',e=>{const sa=e.target.closest('[data-seller-action]');if(sa){const seller=store.sellers.find(s=>s.id===sa.dataset.id);if(seller){seller.status=sa.dataset.sellerAction==='approve'?'approved':'rejected';saveStore(store);renderAdmin()}return}const la=e.target.closest('[data-list-action]');if(la){const item=store.listings.find(x=>x.id===la.dataset.id);if(!item)return;if(la.dataset.listAction==='price'){const value=prompt('Nouveau prix en euros :',item.price);if(value!==null&&Number(value)>0){item.price=Number(value);saveStore(store);render()}}else if(la.dataset.listAction==='approve'){item.status='approved';saveStore(store);render()}else if(la.dataset.listAction==='delete'&&confirm('Supprimer cette annonce de la démonstration ?')){store.listings=store.listings.filter(x=>x.id!==item.id);saveStore(store);render()}}});document.getElementById('year').textContent=new Date().getFullYear();
-document.getElementById('whatsappContact').addEventListener('click',e=>{e.preventDefault();if(!TIAXORA_WHATSAPP_NUMBER){alert(lang==='fr'?'Le bouton WhatsApp est prêt. Le numéro officiel de TIAXORA devra être ajouté avant la mise en ligne.':'The WhatsApp button is ready. TIAXORA’s official number must be added before launch.');return;}const message=lang==='fr'?'Bonjour TIAXORA, je souhaite obtenir des informations sur un billet.':'Hello TIAXORA, I would like information about a ticket.';window.open('https://wa.me/'+TIAXORA_WHATSAPP_NUMBER+'?text='+encodeURIComponent(message),'_blank','noopener');});render();
-</script>
-</body></html>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script><script>
 const SUPABASE_URL = 'https://aszbqnkaqdbgdqdciifb.supabase.co';
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_G5Y3B3o6hljykJ4jdEUOAA_-ApvsjpD';
 
-window.tiaxoraSupabase = window.supabase.createClient(
+const SUPABASE_PUBLISHABLE_KEY =
+  'sb_publishable_G5Y3B3o6hljykJ4jdEUOAA_-ApvsjpD';
+
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
-</script>
-</body></html><section id="tiaxora-auth" style="max-width:400px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:12px;font-family:Arial,sans-serif;">
-  <h2>Bienvenue sur TIAXORA</h2>
-  <p>Connectez-vous ou créez votre compte.</p>
 
-  <input id="tiaxora-email" type="email" placeholder="Votre adresse e-mail" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
+let currentSession = null;
+let currentProfile = null;
 
-  <input id="tiaxora-password" type="password" placeholder="Votre mot de passe" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
+document.getElementById('year').textContent =
+  new Date().getFullYear();
 
-  <button onclick="tiaxoraSignup()" style="padding:12px;margin:5px;background:#087f5b;color:white;border:0;border-radius:6px;">
-    Créer un compte
-  </button>
+function setMessage(id, message, success = false) {
+  const el = document.getElementById(id);
+  el.textContent = message;
+  el.className = 'form-message ' + (success ? 'success' : 'error');
+}
 
-  <button onclick="tiaxoraLogin()" style="padding:12px;margin:5px;background:#1c3faa;color:white;border:0;border-radius:6px;">
-    Connexion
-  </button>
+function toggleMenu() {
+  const menu = document.getElementById('profileMenu');
+  menu.style.display =
+    menu.style.display === 'block' ? 'none' : 'block';
+}
 
-  <p id="tiaxora-message"></p>
-</section>
+function showSection(id) {
+  document.querySelectorAll('main > section').forEach(section => {
+    section.classList.add('hidden');
+  });
 
-<script>
-async function tiaxoraSignup() {
-  const email = document.getElementById('tiaxora-email').value.trim();
-  const password = document.getElementById('tiaxora-password').value;
-  const message = document.getElementById('tiaxora-message');
+  const target = document.getElementById(id);
 
-  if (!email || password.length < 6) {
-    message.textContent = 'Entrez votre e-mail et un mot de passe de 6 caractères minimum.';
+  if (target) {
+    target.classList.remove('hidden');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  document.getElementById('profileMenu').style.display = 'none';
+}
+
+function requireLogin() {
+  if (!currentSession) {
+    showSection('auth');
+    setMessage(
+      'authMessage',
+      'Connecte-toi ou crée un compte pour continuer.'
+    );
+    return false;
+  }
+  return true;
+}
+
+function buyTicket() {
+  if (!requireLogin()) return;
+
+  alert(
+    'Tu es connecté. Les achats réels seront activés après la mise en place du système sécurisé de commandes et de paiements.'
+  );
+}
+
+async function refreshSession() {
+  const { data, error } = await db.auth.getSession();
+
+  if (error) {
+    console.error(error);
     return;
   }
 
-  const { error } = await window.tiaxoraSupabase.auth.signUp({
-    email: email,
-    password: password
-  });
-
-  message.textContent = error ? error.message : 'Compte créé ! Vérifiez votre e-mail si une confirmation est demandée.';
+  currentSession = data.session;
+  updateAccountDisplay();
 }
 
-async function tiaxoraLogin() {
-  const email = document.getElementById('tiaxora-email').value.trim();
-  const password = document.getElementById('tiaxora-password').value;
-  const message = document.getElementById('tiaxora-message');
+function updateAccountDisplay() {
+  const menuButton = document.querySelector('.profile-button');
 
-  const { data, error } = await window.tiaxoraSupabase.auth.signInWithPassword({
-    email: email,
-    password: password
-  });
+  if (currentSession) {
+    menuButton.textContent = '👤 Mon compte';
 
-  message.textContent = error
-    ? error.message
-    : 'Connexion réussie ! Bienvenue sur TIAXORA.';
-}
-      </script> <script>
-async function tiaxoraUpdateUI() {
-  const { data: { session } } =
-    await window.tiaxoraSupabase.auth.getSession();
+    const user = currentSession.user;
 
-  const form = document.getElementById('tiaxora-auth');
-  let status = document.getElementById('tiaxora-user-status');
+    document.getElementById('profileDetails').innerHTML = '';
 
-  if (!form) return;
+    const details = document.getElementById('profileDetails');
+    const email = document.createElement('p');
+    email.textContent = 'E-mail : ' + (user.email || 'Non disponible');
 
-  if (!status) {
-    status = document.createElement('p');
-    status.id = 'tiaxora-user-status';
-    form.insertAdjacentElement('afterend', status);
-  }
+    const name = document.createElement('p');
+    name.textContent = 'Nom : ' +
+      (user.user_metadata?.full_name || 'Non renseigné');
 
-  if (session) {
-    form.style.display = 'none';
-    status.textContent = 'Bienvenue sur TIAXORA ! Vous êtes connecté.';
+    details.append(email, name);
+
+    checkAdmin();
   } else {
-    form.style.display = 'block';
-    status.textContent = '';
+    menuButton.textContent = '☰ Mon compte';
+
+    document.getElementById('profileDetails').textContent =
+      'Connecte-toi pour afficher ton profil.';
+
+    document.getElementById('adminDetails').textContent =
+      'Connecte-toi avec un compte autorisé pour accéder à cet espace.';
   }
 }
 
-tiaxoraUpdateUI();
+async function checkAdmin() {
+  const box = document.getElementById('adminDetails');
 
-window.tiaxoraSupabase.auth.onAuthStateChange((event, session) => {
-  const form = document.getElementById('tiaxora-auth');
-  let status = document.getElementById('tiaxora-user-status');
-
-  if (!form) return;
-
-  if (!status) {
-    status = document.createElement('p');
-    status.id = 'tiaxora-user-status';
-    form.insertAdjacentElement('afterend', status);
+  if (!currentSession) {
+    box.textContent = 'Connexion requise.';
+    return;
   }
 
-  form.style.display = session ? 'none' : 'block';
-  status.textContent = session
-  status.textContent = session
-    ? 'Bienvenue sur TIAXORA ! Connecté avec : ' + session.user.email
-    : '';
-});
-</script></body>
-</html>
+  const role = currentSession.user.app_metadata?.role;
+
+  if (role === 'admin') {
+    box.textContent =
+      'Compte administrateur reconnu. Les actions administratives devront être protégées par les politiques RLS.';
+  } else {
+    box.textContent =
+      'Accès administrateur non autorisé pour ce compte.';
+  }
+}
+
+document.getElementById('signupForm').addEventListener(
+  'submit',
+  async function(event) {
+    event.preventDefault();
+
+    const fullName =
+      document.getElementById('signupName').value.trim();
+
+    const email =
+      document.getElementById('signupEmail').value.trim();
+
+    const password =
+      document.getElementById('signupPassword').value;
+
+    setMessage('authMessage', 'Création du compte en cours...', true);
+
+    const { data, error } = await db.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName
+        }
+      }
+    });
+
+    if (error) {
+      setMessage('authMessage', error.message);
+      return;
+    }
+
+    if (data.session) {
+      currentSession = data.session;
+      updateAccountDisplay();
+      setMessage('authMessage', 'Compte créé avec succès !', true);
+      showSection('profil');
+    } else {
+      setMessage(
+        'authMessage',
+        'Inscription enregistrée. Vérifie tes e-mails pour confirmer ton compte si Supabase le demande.',
+        true
+      );
+    }
+  }
+);
+
+document.getElementById('loginForm').addEventListener(
+  'submit',
+  async function(event) {
+    event.preventDefault();
+
+    const email =
+      document.getElementById('loginEmail').value.trim();
+
+    const password =
+      document.getElementById('loginPassword').value;
+
+    setMessage('authMessage', 'Connexion en cours...', true);
+
+    const { data, error } = await db.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      setMessage('authMessage', error.message);
+      return;
+    }
+
+    currentSession = data.session;
+    updateAccountDisplay();
+
+    setMessage('authMessage', 'Connexion réussie !', true);
+    showSection('profil');
+  }
+);
+
+document.getElementById('sellerForm').addEventListener(
+  'submit',
+  async function(event) {
+    event.preventDefault();
+
+    if (!requireLogin()) return;
+
+    const fullName =
+      document.getElementById('sellerName').value.trim();
+
+    const country =
+      document.getElementById('sellerCountry').value.trim();
+
+    const reason =
+      document.getElementById('sellerReason').value.trim();
+
+    setMessage('sellerMessage', 'Envoi de la candidature...', true);
+
+    const { error } = await db
+      .from('seller_applications')
+      .insert({
+        user_id: currentSession.user.id,
+        full_name: fullName,
+        country: country,
+        reason: reason,
+        status: 'pending'
+      });
+
+    if (error) {
+      console.error(error);
+      setMessage(
+        'sellerMessage',
+        'Impossible d’envoyer la candidature. Vérifie la structure de la table et ses politiques de sécurité Supabase.'
+      );
+      return;
+    }
+
+    setMessage(
+      'sellerMessage',
+      'Candidature envoyée ! Elle doit être examinée avant toute autorisation de vente.',
+      true
+    );
+
+    this.reset();
+  }
+);
+
+document.getElementById('ticketForm').addEventListener(
+  'submit',
+  async function(event) {
+    event.preventDefault();
+
+    if (!requireLogin()) return;
+
+    const role = currentSession.user.app_metadata?.role;
+
+    if (role !== 'seller' && role !== 'admin') {
+      setMessage(
+        'ticketMessage',
+        'Tu dois d’abord obtenir l’autorisation de vendre.'
+      );
+      return;
+    }
+
+    const title =
+      document.getElementById('ticketTitle').value.trim();
+
+    const sport =
+      document.getElementById('ticketSport').value;
+
+    const city =
+      document.getElementById('ticketCity').value.trim();
+
+    const eventDate =
+      document.getElementById('ticketDate').value;
+
+    const price =
+      Number(document.getElementById('ticketPrice').value);
+
+    if (!Number.isFinite(price) || price <= 0) {
+      setMessage('ticketMessage', 'Le prix doit être supérieur à zéro.');
+      return;
+    }
+
+    setMessage('ticketMessage', 'Envoi du billet en cours...', true);
+
+   
