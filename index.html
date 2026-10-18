@@ -77,3 +77,56 @@ window.tiaxoraSupabase = window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
 </script>
+</body></html><section id="tiaxora-auth" style="max-width:400px;margin:30px auto;padding:20px;border:1px solid #ddd;border-radius:12px;font-family:Arial,sans-serif;">
+  <h2>Bienvenue sur TIAXORA</h2>
+  <p>Connectez-vous ou créez votre compte.</p>
+
+  <input id="tiaxora-email" type="email" placeholder="Votre adresse e-mail" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
+
+  <input id="tiaxora-password" type="password" placeholder="Votre mot de passe" style="width:100%;padding:12px;margin:8px 0;box-sizing:border-box;">
+
+  <button onclick="tiaxoraSignup()" style="padding:12px;margin:5px;background:#087f5b;color:white;border:0;border-radius:6px;">
+    Créer un compte
+  </button>
+
+  <button onclick="tiaxoraLogin()" style="padding:12px;margin:5px;background:#1c3faa;color:white;border:0;border-radius:6px;">
+    Connexion
+  </button>
+
+  <p id="tiaxora-message"></p>
+</section>
+
+<script>
+async function tiaxoraSignup() {
+  const email = document.getElementById('tiaxora-email').value.trim();
+  const password = document.getElementById('tiaxora-password').value;
+  const message = document.getElementById('tiaxora-message');
+
+  if (!email || password.length < 6) {
+    message.textContent = 'Entrez votre e-mail et un mot de passe de 6 caractères minimum.';
+    return;
+  }
+
+  const { error } = await window.tiaxoraSupabase.auth.signUp({
+    email: email,
+    password: password
+  });
+
+  message.textContent = error ? error.message : 'Compte créé ! Vérifiez votre e-mail si une confirmation est demandée.';
+}
+
+async function tiaxoraLogin() {
+  const email = document.getElementById('tiaxora-email').value.trim();
+  const password = document.getElementById('tiaxora-password').value;
+  const message = document.getElementById('tiaxora-message');
+
+  const { data, error } = await window.tiaxoraSupabase.auth.signInWithPassword({
+    email: email,
+    password: password
+  });
+
+  message.textContent = error
+    ? error.message
+    : 'Connexion réussie ! Bienvenue sur TIAXORA.';
+}
+      </script>
