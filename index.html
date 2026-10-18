@@ -129,4 +129,49 @@ async function tiaxoraLogin() {
     ? error.message
     : 'Connexion réussie ! Bienvenue sur TIAXORA.';
 }
-      </script>
+      </script> <script>
+async function tiaxoraUpdateUI() {
+  const { data: { session } } =
+    await window.tiaxoraSupabase.auth.getSession();
+
+  const form = document.getElementById('tiaxora-auth');
+  let status = document.getElementById('tiaxora-user-status');
+
+  if (!form) return;
+
+  if (!status) {
+    status = document.createElement('p');
+    status.id = 'tiaxora-user-status';
+    form.insertAdjacentElement('afterend', status);
+  }
+
+  if (session) {
+    form.style.display = 'none';
+    status.textContent = 'Bienvenue sur TIAXORA ! Vous êtes connecté.';
+  } else {
+    form.style.display = 'block';
+    status.textContent = '';
+  }
+}
+
+tiaxoraUpdateUI();
+
+window.tiaxoraSupabase.auth.onAuthStateChange((event, session) => {
+  const form = document.getElementById('tiaxora-auth');
+  let status = document.getElementById('tiaxora-user-status');
+
+  if (!form) return;
+
+  if (!status) {
+    status = document.createElement('p');
+    status.id = 'tiaxora-user-status';
+    form.insertAdjacentElement('afterend', status);
+  }
+
+  form.style.display = session ? 'none' : 'block';
+  status.textContent = session
+    ? 'Bienvenue sur TIAXORA ! Vous êtes connecté.'
+    : '';
+});
+</script></body>
+</html>
