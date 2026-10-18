@@ -894,5 +894,58 @@ document.getElementById('ticketForm').addEventListener(
     }
 
     setMessage('ticketMessage', 'Envoi du billet en cours...', true);
+const { error } = await db
+      .from('tickets')
+      .insert({
+        seller_id: currentSession.user.id,
+        title: title,
+        sport: sport,
+        city: city,
+        event_date: eventDate,
+        price: price,
+        status: 'pending'
+      });
 
+    if (error) {
+      console.error(error);
+      setMessage(
+        'ticketMessage',
+        'Envoi impossible. Vérifie les paramètres Supabase.'
+      );
+      return;
+    }
+
+    setMessage(
+      'ticketMessage',
+      'Billet soumis pour vérification.',
+      true
+    );
+
+    this.reset();
+  }
+);
+
+async function logout() {
+  const { error } = await db.auth.signOut();
+
+  if (error) {
+    alert('Erreur lors de la déconnexion : ' + error.message);
+    return;
+  }
+
+  currentSession = null;
+  updateAccountDisplay();
+  showSection('accueil');
+}
+
+db.auth.onAuthStateChange((_event, session) => {
+  currentSession = session;
+  updateAccountDisplay();
+});
+
+refreshSession();
+</script>
+
+</body>
+</html>
    
