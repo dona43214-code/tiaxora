@@ -147,6 +147,7 @@ const price = Number($('ticketPrice').value);
 const currency = $('ticketCurrency').value;
 const quantity = Number($('ticketQuantity').value);
 const description = $('ticketDescription').value.trim();
+  const imageFile = $('ticketImage').files[0];
 const btn = e.target.querySelector('button[type="submit"]');
 
 if (!event_name || !sport || !eventDate ||
