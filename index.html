@@ -273,7 +273,7 @@ const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim
         </article>
       `;
     }).join('');
-
+grid.querySelectorAll('.tiaxora-real-ticket').forEach(carte => carte.remove());
     grid.insertAdjacentHTML('afterbegin', cartes);
 
     $('resultsInfo').textContent =
