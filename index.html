@@ -264,7 +264,7 @@ const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim
                 <div class="from">PRIX DU BILLET</div>
                 <div class="price">${escapeHtml(String(b.price))} ${escapeHtml(b.currency || '')}</div>
               </div>
-              <span class="status">Disponible</span>
+              <span class="status">Billet disponible</span>
             </div>
 
             <p>${escapeHtml(b.description || '')}</p>
