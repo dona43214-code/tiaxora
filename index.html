@@ -77,4 +77,97 @@ $('logoutBtn').addEventListener('click',async()=>{if(db)await db.auth.signOut();
 $('sellerForm').addEventListener('submit',async e=>{e.preventDefault();if(!currentUser){showMsg($('sellerMsg'),'Connectez-vous avant de soumettre une candidature.','err');return;}const full_name=$('sellerName').value.trim();const country=$('sellerCountry').value.trim();const experience=$('sellerReason').value.trim();if(!full_name||!country||!experience){showMsg($('sellerMsg'),'Veuillez remplir tous les champs.','err');return;}const btn=e.target.querySelector('button[type="submit"]');if(btn)btn.disabled=true;try{const {error}=await db.from('seller_applications').insert({user_id:currentUser.id,full_name,country,experience,status:'pending'});if(error)throw error;showMsg($('sellerMsg'),'Votre candidature a bien été envoyée. Elle est en attente de validation.','ok');e.target.reset();}catch(error){console.error('Erreur candidature TIAXORA:',error);showMsg($('sellerMsg'),'Échec de l’envoi : '+error.message,'err');}finally{if(btn)btn.disabled=false;}});$('contactForm').addEventListener('submit',e=>{e.preventDefault();showMsg($('contactMsg'),'Le formulaire est prêt, mais son envoi réel doit être relié au service de contact TIAXORA. Votre message n’a pas été transmis.','info');});
 $('language').addEventListener('change',e=>{const l=e.target.value;document.documentElement.lang=l;const words={fr:['Trouver vos billets. Vivez les grands matchs.','Rechercher','Tous les sports'],en:['Find your tickets. Experience the big matches.','Search','All sports'],it:['Trova i tuoi biglietti. Vivi le grandi partite.','Cerca','Tutti gli sport'],de:['Finde deine Tickets. Erlebe die großen Spiele.','Suchen','Alle Sportarten'],es:['Encuentra tus entradas. Vive los grandes partidos.','Buscar','Todos los deportes']};const w=words[l]||words.fr;document.querySelector('.hero h1').textContent=w[0];$('searchBtn').textContent=w[1];$('sport').options[0].textContent=w[2];render();});
 $('year').textContent=new Date().getFullYear();render();refreshSession();if(db)db.auth.onAuthStateChange((_event,session)=>{currentUser=session?.user||null;updateAccount();});
-</script></body></html>
+async function refreshSellerApproval(){
+const panel = $('ticketPublishPanel');
+if (!panel) return;
+panel.classList.add('hidden');
+if (!db || !currentUser) return;
+
+try {
+const { data, error } = await db
+.from('seller_applications')
+.select('status')
+.eq('user_id', currentUser.id)
+.eq('status', 'approved')
+.limit(1);
+
+if (error) throw error;
+if (data && data.length > 0) {
+  panel.classList.remove('hidden');
+}
+
+} catch (err) {
+console.error('Vérification vendeur :', err);
+}
+}
+
+const ticketPublishForm = $('ticketPublishForm');
+
+if (ticketPublishForm) {
+ticketPublishForm.addEventListener('submit', async e => {
+e.preventDefault();
+
+if (!db || !currentUser) {
+  showMsg($('ticketPublishMsg'), 'Connectez-vous pour publier un billet.', 'err');
+  return;
+}
+
+const event_name = $('ticketEventName').value.trim();
+const sport = $('ticketSport').value;
+const eventDate = $('ticketEventDate').value;
+const price = Number($('ticketPrice').value);
+const currency = $('ticketCurrency').value;
+const quantity = Number($('ticketQuantity').value);
+const description = $('ticketDescription').value.trim();
+const btn = e.target.querySelector('button[type="submit"]');
+
+if (!event_name || !sport || !eventDate ||
+    !Number.isFinite(price) || price <= 0 ||
+    !Number.isInteger(quantity) || quantity < 1 ||
+    !description) {
+  showMsg($('ticketPublishMsg'), 'Vérifiez les informations saisies.', 'err');
+  return;
+}
+
+if (btn) btn.disabled = true;
+
+try {
+  const { data: apps, error: appError } = await db
+    .from('seller_applications')
+    .select('status')
+    .eq('user_id', currentUser.id)
+    .eq('status', 'approved')
+    .limit(1);
+
+  if (appError) throw appError;
+
+  if (!apps || apps.length === 0) {
+    throw new Error('Votre candidature vendeur doit être approuvée avant de publier.');
+  }
+
+  const { error } = await db.from('tickets').insert({
+    seller_id: currentUser.id,
+    event_name,
+    sport,
+    event_date: new Date(eventDate).toISOString(),
+    price,
+    currency,
+    quantity,
+    description,
+    status: 'pending'
+  });
+
+  if (error) throw error;
+
+  showMsg($('ticketPublishMsg'), 'Billet envoyé ! Il attend la validation de TIAXORA.', 'ok');
+  e.target.reset();
+
+} catch (err) {
+  console.error('Erreur publication TIAXORA :', err);
+  showMsg($('ticketPublishMsg'), err.message || 'Échec de la publication.', 'err');
+} finally {
+  if (btn) btn.disabled = false;
+}
+
+});
+}</script></body></html>
