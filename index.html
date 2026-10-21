@@ -269,7 +269,7 @@ const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim
 
             <p>${escapeHtml(b.description || '')}</p>
             <div class="meta">Quantité : ${escapeHtml(String(b.quantity))}</div>
-            <button class="btn gold" type="button" onclick="alert('La commande en ligne sera disponible après la mise en place du système de réservation sécurisé.');">Demander ce billet</button>
+            <button class="btn gold" type="button" onclick="demanderBilletTIAXORA('${b.id}')">Demander ce billet</button>
           </div>
         </article>
       `;
