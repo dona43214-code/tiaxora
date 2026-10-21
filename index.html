@@ -285,8 +285,8 @@ grid.querySelectorAll('.tiaxora-real-ticket').forEach(carte => carte.remove());
 }
 
 render = function () {
-  renderDemoTIAXORA();
+  const grid = $('eventGrid');
+  if (grid) grid.innerHTML = '';
   chargerBilletsTIAXORA();
 };
-
 render();</script></body></html>
