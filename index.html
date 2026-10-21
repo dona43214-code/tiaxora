@@ -230,7 +230,7 @@ async function chargerBilletsTIAXORA() {
 
     if (error) throw error;
 
-    if (!billets || billets.length === 0) return;
+const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim().toLowerCase(), sport = $('sport').value, date = $('date').value; return (!q || (b.event_name || '').toLowerCase().includes(q)) && (!sport || b.sport === sport) && (!date || (b.event_date || '').slice(0,10) === date); });
 
     const cartes = billets.map(b => {
       const resultat = b.image_path
