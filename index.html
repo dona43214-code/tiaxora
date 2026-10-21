@@ -274,7 +274,7 @@ const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim
       `;
     }).join('');
 grid.querySelectorAll('.tiaxora-real-ticket').forEach(carte => carte.remove());
-    grid.insertAdjacentHTML('afterbegin', cartes);
+    grid.innerHTML = cartes || '<div class="empty">Aucun billet approuvé disponible pour le moment.</div>';
 
     $('resultsInfo').textContent =
       `${billetsFiltres.length} billet(s) approuvé(s) disponible(s)`;
