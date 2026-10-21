@@ -277,7 +277,7 @@ const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim
     grid.insertAdjacentHTML('afterbegin', cartes);
 
     $('resultsInfo').textContent =
-      `${billets.length} billet(s) approuvé(s) disponible(s)`;
+      `${billetsFiltres.length} billet(s) approuvé(s) disponible(s)`;
 
   } catch (erreur) {
     console.error('Chargement des billets TIAXORA :', erreur);
