@@ -37,7 +37,11 @@
 <div class="field"><label for="ticketPrice">Prix par billet</label><input id="ticketPrice" type="number" min="0.01" step="0.01" required></div>
 <div class="field"><label for="ticketCurrency">Devise</label><select id="ticketCurrency" required><option value="XOF">FCFA (XOF)</option><option value="EUR">Euro (EUR)</option><option value="USD">Dollar US (USD)</option><option value="GBP">Livre sterling (GBP)</option></select></div>
 <div class="field"><label for="ticketQuantity">Nombre de billets</label><input id="ticketQuantity" type="number" min="1" max="10000" step="1" required></div>
-<div class="field full"><label for="ticketDescription">Description du billet</label><textarea id="ticketDescription" required maxlength="2500"></textarea></div>
+<div class="field full"><label for="ticketDescription">Description du billet</label><textarea id="ticketDescription" required maxlength="2500"></textarea></div> <div class="field full">
+<label for="ticketImage">Photo du billet (JPEG uniquement, 5 Mo maximum)</label>
+<input id="ticketImage" type="file" accept="image/jpeg" required>
+<img id="ticketImagePreview" class="hidden" style="max-width:100%;max-height:250px;margin-top:10px;border-radius:10px" alt="Aperçu de la photo">
+</div>
 </div>
 <button class="btn gold" type="submit">Envoyer pour validation</button>
 </form>
