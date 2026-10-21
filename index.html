@@ -150,7 +150,7 @@ const description = $('ticketDescription').value.trim();
   const imageFile = $('ticketImage').files[0];
 const btn = e.target.querySelector('button[type="submit"]');
 
-if (!event_name || !sport || !eventDate ||
+if (!event_name || !sport || !eventDate || !imageFile ||
     !Number.isFinite(price) || price <= 0 ||
     !Number.isInteger(quantity) || quantity < 1 ||
     !description) {
