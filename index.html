@@ -170,4 +170,10 @@ try {
 }
 
 });
-}</script></body></html>
+} document.querySelectorAll('[data-panel]').forEach(button => {
+  button.addEventListener('click', () => {
+    if (button.dataset.panel === 'sellerPanel') {
+      refreshSellerApproval();
+    }
+  });
+});</script></body></html>
