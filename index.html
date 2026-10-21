@@ -241,7 +241,7 @@ const billetsFiltres = (billets || []).filter(b => { const q = $('q').value.trim
 
       return `
         <article class="event tiaxora-real-ticket">
-          <div class="visual" style="padding:12px">
+          <div class="visual" style="padding:16px;background:#f4f6fa;border-radius:14px;min-height:220px;display:flex;align-items:center;justify-content:center">
             ${photo ? `
               <img
                 src="${escapeHtml(photo)}"
