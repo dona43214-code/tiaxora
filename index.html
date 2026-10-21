@@ -284,7 +284,60 @@ grid.querySelectorAll('.tiaxora-real-ticket').forEach(carte => carte.remove());
     console.error('Chargement des billets TIAXORA :', erreur);
   }
 }
+async function demanderBilletTIAXORA(ticketId) {
+  if (!currentUser) {
+    alert('Connectez-vous à votre compte TIAXORA pour demander un billet.');
+    return;
+  }
 
+  const nom = prompt('Votre nom complet :');
+  if (!nom || !nom.trim()) return;
+
+  const email = prompt('Votre adresse e-mail :');
+  if (!email || !email.trim()) return;
+
+  const quantiteTexte = prompt('Combien de billets souhaitez-vous ?');
+  const quantite = Number(quantiteTexte);
+
+  if (!Number.isInteger(quantite) || quantite < 1) {
+    alert('Veuillez saisir une quantité valide.');
+    return;
+  }
+
+  const { data: billet, error: erreurBillet } = await db
+    .from('tickets')
+    .select('id, quantity, status')
+    .eq('id', ticketId)
+    .eq('status', 'approved')
+    .maybeSingle();
+
+  if (erreurBillet || !billet) {
+    alert('Ce billet n’est plus disponible.');
+    return;
+  }
+
+  if (quantite > billet.quantity) {
+    alert('La quantité demandée dépasse le nombre de billets disponibles.');
+    return;
+  }
+
+  const { error } = await db.from('ticket_requests').insert({
+    ticket_id: ticketId,
+    buyer_id: currentUser.id,
+    buyer_name: nom.trim(),
+    buyer_email: email.trim(),
+    quantity: quantite,
+    status: 'pending'
+  });
+
+  if (error) {
+    console.error(error);
+    alert('Impossible d’envoyer la demande. Vérifiez votre connexion et réessayez.');
+    return;
+  }
+
+  alert('Votre demande a été envoyée à TIAXORA. Elle reste en attente de confirmation.');
+}
 render = function () {
   const grid = $('eventGrid');
   if (grid) grid.innerHTML = '';
