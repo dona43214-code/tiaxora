@@ -105,7 +105,31 @@ console.error('Vérification vendeur :', err);
 }
 }
 
-const ticketPublishForm = $('ticketPublishForm');
+const ticketImageInput = $('ticketImage');
+const ticketImagePreview = $('ticketImagePreview');
+
+if (ticketImageInput && ticketImagePreview) {
+ticketImageInput.addEventListener('change', () => {
+const file = ticketImageInput.files[0];
+
+if (!file) {
+  ticketImagePreview.classList.add('hidden');
+  return;
+}
+
+if (file.type !== 'image/jpeg' || file.size > 5 * 1024 * 1024) {
+  ticketImageInput.value = '';
+  ticketImagePreview.classList.add('hidden');
+  alert('Choisissez une image JPEG de 5 Mo maximum.');
+  return;
+}
+
+ticketImagePreview.src = URL.createObjectURL(file);
+ticketImagePreview.classList.remove('hidden');
+
+});
+}
+  const ticketPublishForm = $('ticketPublishForm');
 
 if (ticketPublishForm) {
 ticketPublishForm.addEventListener('submit', async e => {
