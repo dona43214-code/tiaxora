@@ -214,4 +214,79 @@ if (uploadError) throw uploadError;
       refreshSellerApproval();
     }
   });
-});</script></body></html>
+});// TIAXORA : afficher les billets approuvés avec leurs photos
+const renderDemoTIAXORA = render;
+
+async function chargerBilletsTIAXORA() {
+  const grid = $('eventGrid');
+  if (!grid || !db) return;
+
+  try {
+    const { data: billets, error } = await db
+      .from('tickets')
+      .select('id,event_name,sport,event_date,price,currency,quantity,description,image_path')
+      .eq('status', 'approved')
+      .order('event_date', { ascending: true });
+
+    if (error) throw error;
+
+    if (!billets || billets.length === 0) return;
+
+    const cartes = billets.map(b => {
+      const resultat = b.image_path
+        ? db.storage.from('ticket-images').getPublicUrl(b.image_path)
+        : null;
+
+      const photo = resultat?.data?.publicUrl || '';
+
+      return `
+        <article class="event">
+          <div class="visual" style="padding:12px">
+            ${photo ? `
+              <img
+                src="${escapeHtml(photo)}"
+                alt="Photo illustrative du billet"
+                loading="lazy"
+                style="width:100%;max-height:200px;object-fit:contain;background:#fff;border-radius:8px"
+              >
+            ` : '<p>Photo indisponible</p>'}
+          </div>
+
+          <div class="event-body">
+            <h3>${escapeHtml(b.event_name || '')}</h3>
+            <div class="meta">
+              📅 ${fmtDate((b.event_date || '').slice(0, 10))}<br>
+              ⚽ ${escapeHtml(b.sport || '')}
+            </div>
+
+            <div class="price-row">
+              <div>
+                <div class="from">PRIX</div>
+                <div class="price">${escapeHtml(String(b.price))} ${escapeHtml(b.currency || '')}</div>
+              </div>
+              <span class="status">Disponible</span>
+            </div>
+
+            <p>${escapeHtml(b.description || '')}</p>
+            <div class="meta">Quantité : ${escapeHtml(String(b.quantity))}</div>
+          </div>
+        </article>
+      `;
+    }).join('');
+
+    grid.insertAdjacentHTML('afterbegin', cartes);
+
+    $('resultsInfo').textContent =
+      `${billets.length} billet(s) approuvé(s) disponible(s)`;
+
+  } catch (erreur) {
+    console.error('Chargement des billets TIAXORA :', erreur);
+  }
+}
+
+render = function () {
+  renderDemoTIAXORA();
+  chargerBilletsTIAXORA();
+};
+
+render();</script></body></html>
