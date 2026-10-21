@@ -172,7 +172,6 @@ try {
 
   if (!apps || apps.length === 0) {
     throw new Error('Votre candidature vendeur doit être approuvée avant de publier.');
-
 const imagePath = currentUser.id + '/' + Date.now() + '-' + imageFile.name.replace(/[^a-zA-Z0-9.-]/g, '');
 const { error: uploadError } = await db.storage
 .from('ticket-images')
