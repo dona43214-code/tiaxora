@@ -186,7 +186,7 @@ if (uploadError) throw uploadError;
   const { error } = await db.from('tickets').insert({
     seller_id: currentUser.id,
     event_name,
-    sport,
+    sport,image_path: imagePath,
     event_date: new Date(eventDate).toISOString(),
     price,
     currency,
